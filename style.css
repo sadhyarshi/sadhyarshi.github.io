@@ -1,7 +1,7 @@
+/* style.css */
 body {
-    margin: 0;
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    background-color: #f9f9f9;
     color: #333;
 }
 
@@ -12,49 +12,37 @@ body {
 }
 
 header {
-    background: #007bff;
-    color: white;
-    padding: 20px 0;
+    background-color: #007acc;
+    color: #fff;
     text-align: center;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 2.5em;
+    padding: 20px 0;
 }
 
 nav ul {
     list-style: none;
     padding: 0;
-    display: flex;
-    justify-content: center;
 }
 
 nav ul li {
-    margin: 0 15px;
+    display: inline-block;
+    margin-right: 20px;
 }
 
 nav ul li a {
-    color: white;
+    color: #fff;
     text-decoration: none;
+    transition: color 0.3s;
 }
 
-.section {
-    padding: 40px 0;
+nav ul li a:hover {
+    color: #ff9900;
 }
 
-.section h2 {
-    font-size: 2em;
-    margin-bottom: 20px;
-}
+/* Style other sections similarly */
 
 footer {
-    background: #333;
-    color: white;
     text-align: center;
-    padding: 10px 0;
-}
-
-footer p {
-    margin: 0;
+    padding: 20px 0;
+    background-color: #007acc;
+    color: #fff;
 }
