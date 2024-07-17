@@ -1,48 +1,189 @@
-/* style.css */
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-header {
-    background-color: #007acc;
-    color: #fff;
-    text-align: center;
-    padding: 20px 0;
-}
-
-nav ul {
-    list-style: none;
+body, html {
+    margin: 0;
     padding: 0;
+    width: 100%;
+    height: 100%;
 }
 
-nav ul li {
+header ul {
+    list-style: none;
+    text-align: center;
+}
+
+header ul li {
     display: inline-block;
+    height: 50px;
+    width: 80px;
+    text-align: center;
+    font-family: "Open Sans";
+    line-height: 48px;
+    padding: 0 20px 0 20px;
+}
+
+header ul li:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+header ul li.current {
+    background-color: black;
+    color: white;
+}
+
+#slides {
+    height: calc(100% - 100px);
+    width: 100%;
+}
+
+#slides nav {
+    font-size: 100px;
+    position: absolute;
+    left: 47%;
+    top: 70%;
+    color: white;
+    z-index: 100;
+}
+
+#slides nav i {
+    cursor: pointer;
+    opacity: 0.2;
+    transition: all 0.5s;
+}
+
+.slide {
+    width: 100%;
+    height: 100%;
+    transition: transform 1s;
+    font-family: "Open Sans";
+    color: white;
+    text-align: center;
+}
+
+.slide h1 {
+    font-size: 50px;
+    font-weight: 500;
+    padding-top: 20px;
+}
+
+.slide0 {
+    background: #2a1e1c;
+    position: relative;
+}
+
+#title {
+    position: relative;
+    top: 24%;
+}
+
+#title h1 {
+    text-align: center;
+    color: white;
+    font-size: 100px;
+    font-family: "Open Sans";
+    padding: 10px;
+    font-weight: 500;
+    padding-top: 0;
+}
+
+#title h2 {
+    text-align: center;
+    color: white;
+    font-size: 50px;
+    font-family: "Open Sans";
+    font-weight: 100;
+}
+
+.slide1 {
+    display: none;
+    background-color: #00ADD5;
+}
+
+.slide1 p {
+    padding: 20px;
+    font-size: 20px;
+    line-height: 40px;
+}
+
+.slide2 {
+    display: none;
+    background-color: #22D6FF;
+}
+
+.slide2 h2 {
+    font-size: 20px;
+    margin-top: 15px;
+    font-weight: 100;
+}
+
+.slide2 div {
+    margin-top: 20px;
+}
+
+.slide2 h3 {
+    font-size: 24px;
+}
+
+.slide3 {
+    display: none;
+    background-color: #FF4C22;
+}
+
+.slide3 h2 {
+    padding-top: 20px;
+}
+
+.slide3 ul {
+    list-style: none;
+    padding-top: 50px;
+}
+
+.slide3 ul a {
+    color: white;
+    text-decoration: none;
+}
+
+.slide3 li {
+    font-size: 40px;
+    font-weight: 100;
+    padding: 10px;
+    margin: 10px auto;
+    border: 1px solid white;
+    border-radius: 10px;
+    width: 300px;
+}
+
+.slide3 li:hover {
+    background-color: rgba(201, 201, 201, 0.1);
+}
+
+footer {
+    height: 50px;
+    width: 100%;
+    text-align: center;
+    font-family: "Open Sans";
+    line-height: 48px;
+}
+
+#links {
+    float: right;
+    font-size: 30px;
     margin-right: 20px;
 }
 
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s;
+#links a {
+    color: #000000;
 }
 
-nav ul li a:hover {
-    color: #ff9900;
+#links i {
+    opacity: 0.3;
 }
 
-/* Style other sections similarly */
+#links i:hover {
+    opacity: 1;
+}
 
-footer {
-    text-align: center;
-    padding: 20px 0;
-    background-color: #007acc;
-    color: #fff;
+footer p {
+    float: left;
+    margin-left: 20px;
 }

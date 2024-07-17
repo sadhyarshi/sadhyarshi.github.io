@@ -3,50 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile</title>
+    <title>Sadhyarshi Sahastranshu's Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>Welcome to My Profile</h1>
-            <nav>
-                <ul>
-                    <li><a href="#about">About Me</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
+        <ul>
+            <li class="current menu0">HOME</li>
+            <li class="menu1">ABOUT</li>
+            <li class="menu2">PROJECTS</li>
+            <li class="menu3">CONTACT</li>
+        </ul>
     </header>
-    <main>
-        <section id="about" class="section">
-            <div class="container">
-                <h2>About Me</h2>
-                <p>Highly motivated and detail-oriented computer science professional with expertise in Java, algorithms, data structures, OOPS, MySQL, CSS, and HTML. Experienced in full-stack web development, customization of open-source document management repositories, and creating migration tools.</p>
+
+    <div id="slides">
+        <nav>
+            <i class="fa fa-chevron-circle-down" id="next"></i>
+        </nav>
+
+        <div class="slide slide0">
+            <div id="title">
+                <h2>Hello, I am</h2>
+                <h1>Sadhyarshi Sahastranshu</h1>
+                <h2>And I'm a Software Developer</h2>
             </div>
-        </section>
-        <section id="projects" class="section">
-            <div class="container">
-                <h2>Projects</h2>
-                <ul>
-                    <li><a href="https://github.com/sadhyarshi/notebook-app">Notebook App</a></li>
-                    <li><a href="https://github.com/sadhyarshi/React">React Projects</a></li>
-                    <li><a href="https://github.com/sadhyarshi/JAVASCRIPT">JavaScript Projects</a></li>
-                </ul>
+        </div>
+
+        <div class="slide slide1">
+            <h1>About</h1>
+            <p>Highly motivated and detail-oriented computer science professional with expertise in Java, algorithms, data structures, OOPS, MySQL, CSS, and HTML.</p>
+        </div>
+
+        <div class="slide slide2">
+            <h1>Projects</h1>
+            <h2>A few things I made:</h2>
+            <div>
+                <h3>GitHub Repository List</h3>
+                <p>Developed an Android app using Kotlin and XML to fetch GitHub repository details.</p>
             </div>
-        </section>
-        <section id="contact" class="section">
-            <div class="container">
-                <h2>Contact</h2>
-                <p>Email: <a href="mailto:"></a></p>
+            <div>
+                <h3>Counter</h3>
+                <p>Published a tally counter app on Google Play Store.</p>
             </div>
-        </section>
-    </main>
+        </div>
+
+        <div class="slide slide3">
+            <h1>Contact</h1>
+            <h2>You can find me on the internet here:</h2>
+            <ul>
+                <a href="mailto:sadhyarshi@example.com"><li>
+                    <i class="fa fa-envelope"></i> Mail
+                </li></a>
+                <a href="https://codepen.io/sadhyarshi/"><li>
+                    <i class="fa fa-codepen"></i> Codepen
+                </li></a>
+                <a href="https://github.com/sadhyarshi"><li>
+                    <i class="fa fa-github"></i> Github
+                </li></a>
+            </ul>
+        </div>
+    </div>
+
     <footer>
-        <div class="container">
-            <p>&copy; 2024 Sadhyarshi Sahastranshu. All rights reserved.</p>
+        <p class="copy">Sadhyarshi Sahastranshu &copy; 2024</p>
+        <div id="links">
+            <a href="mailto:sadhyarshi@example.com"><i class="fa fa-envelope"></i></a>
+            <a href="https://codepen.io/sadhyarshi/"><i class="fa fa-codepen"></i></a>
+            <a href="https://github.com/sadhyarshi"><i class="fa fa-github"></i></a>
         </div>
     </footer>
+
+    <script src="scripts.js"></script>
 </body>
 </html>
