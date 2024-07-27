@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vector Illustration Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+    <!-- Header and Navigation sections remain unchanged -->
     <header>
-       
-            <div class="banner">
-                <img src="images/sence11.jpg" alt="Your Artwork Banner">
-            </div>
+        <div class="banner">
+            <img src="images/sence11.jpg" alt="Your Artwork Banner">
+        </div>
         <div class="container">
             <h1>Sadhyarshi Sahastranshu</h1>
             <p>Vector Illustrator | Digital Artist | Full Stack Developer</p>
@@ -19,9 +21,9 @@
     </header>
     <nav>
         <div class="container">
-            <a href="#about">About</a>
-            <a href="#portfolio">Portfolio</a>
-            <a href="#contact">Contact</a>
+            <a href="#about" class="nav-item"><i class="bi bi-person-fill"></i> About</a>
+            <a href="#portfolio" class="nav-item"><i class="bi bi-images"></i> Portfolio</a>
+            <a href="#contact" class="nav-item"><i class="bi bi-envelope-fill"></i> Contact</a>
         </div>
     </nav>
     <main>
@@ -39,32 +41,94 @@
             <div class="technologies">
                 <img src="images/spring.png" alt="Spring Logo" class="tech-logo">
                 <img src="images/java.png" alt="Java Logo" class="tech-logo">
-                <img src="images/html.png" alt="Java Logo" class="tech-logo">
-                <img src="images/database.png" alt="Java Logo" class="tech-logo">
-                <img src="images/css.png" alt="Java Logo" class="tech-logo">
-                <img src="images/wordpress.png" alt="Java Logo" class="tech-logo">
-                <img src="images/react.png" alt="Java Logo" class="tech-logo">
+                <img src="images/html.png" alt="HTML Logo" class="tech-logo">
+                <img src="images/database.png" alt="Database Logo" class="tech-logo">
+                <img src="images/css.png" alt="CSS Logo" class="tech-logo">
+                <img src="images/wordpress.png" alt="WordPress Logo" class="tech-logo">
+                <img src="images/react.png" alt="React Logo" class="tech-logo">
+            </div>
+            <div class="skills">
+                <h3>Technical Skills</h3>
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">Java</div>
+                </div>
+                <div class="progress mt-3">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">Spring Framework</div>
+                </div>
+                <div class="progress mt-3">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">React</div>
+                </div>
+                <div class="progress mt-3">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: 85%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">HTML/CSS</div>
+                </div>
+                <div class="progress mt-3">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">SQL</div>
+                </div>
+                <div class="progress mt-3">
+                    <div class="progress-bar bg-secondary" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">Python</div>
+                </div>
             </div>
         </section>
-        
+        <section id="portfolio" class="container">
+            <h2>Portfolio</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img src="images/manindra.jpg" class="card-img-top" alt="Artwork 1">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <p class="card-text"></p>
+                            <a href="" class="btn btn-primary" target="_blank">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img src="images/dinesh.jpg" class="card-img-top" alt="Artwork 2">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <p class="card-text"></p>
+                            <a href="" class="btn btn-primary" target="_blank">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img src="images/star couple1.jpg" class="card-img-top" alt="Artwork 3">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <p class="card-text"></p>
+                            <a href="" class="btn btn-primary" target="_blank">View Project</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section id="portfolio" class="container">
             <h2>My Work</h2>
             <div class="gallery">
                 <div class="gallery-item">
-                    <img src="images/alone boy2.jpg" alt="Alone boy">
+                    <img src="images/dinesh.jpg" alt="Alone boy">
                     <p>Loneliness</p>
                 </div>
                 <div class="gallery-item">
                     <img src="images/choubey ji.jpg" alt="Choubey ji">
                     <p>Choubey Ji</p>
                 </div>
-
                 <div class="gallery-item">
-                    <img src="images/girl new artwork.jpg" alt="Choubey ji">
+                    <img src="images/girl new artwork.jpg" alt="Girl Artwork">
                     <p>Random</p>
                 </div>
                 <div class="gallery-item">
-                    <img src="images/cccccccccccccccccccccccc.png" alt="Choubey ji">
+                    <img src="images/cccccccccccccccccccccccc.png" alt="Artwork">
+                    <p>Random</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/sence11.jpg" alt="Artwork">
+                    <p>Random</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/root chakra.jpg" alt="Artwork">
                     <p>Random</p>
                 </div>
                 <!-- Repeat gallery items for more illustrations -->
@@ -74,16 +138,36 @@
             <h2>Contact</h2>
             <p>If you'd like to work with me or have any questions, feel free to reach out.</p>
             <ul>
-                <li>Email: <a href="mailto:your.email@example.com"></a></li>
-                <li>LinkedIn: <a href="https://linkedin.com/in/sadhyarshi" target="_blank">linkedin.com/in/sadhyarshi</a></li>
-                <li>Shutterstock: <a href="https://shutterstock.com/g/sadhyarshi" target="_blank">shutterstock.com/g/sadhyarshi</a></li>
+                <li><i class="bi bi-envelope-fill"></i> Email: <a href="mailto:your.email@example.com"></a></li>
+                <li><i class="bi bi-linkedin"></i> LinkedIn: <a href="https://linkedin.com/in/sadhyarshi" target="_blank">linkedin.com/in/sadhyarshi</a></li>
+                <li><i class="bi bi-camera-fill"></i> Shutterstock: <a href="https://shutterstock.com/g/sadhyarshi" target="_blank">shutterstock.com/g/sadhyarshi</a></li>
             </ul>
         </section>
     </main>
     <footer>
         <div class="container">
+            <ul class="footer-links">
+                <li><a href="#about"><i class="bi bi-person-fill"></i> About</a></li>
+                <li><a href="#portfolio"><i class="bi bi-images"></i> Portfolio</a></li>
+                <li><a href="#contact"><i class="bi bi-envelope-fill"></i> Contact</a></li>
+            </ul>
+            <div class="social-media">
+                <a href="https://linkedin.com/in/sadhyarshi" target="_blank"><i class="bi bi-linkedin"></i></a>
+                <a href="https://shutterstock.com/g/sadhyarshi" target="_blank"><i class="bi bi-camera"></i></a>
+                <!-- Add more social media icons as needed -->
+            </div>
             <p>&copy; 2024 Sadhyarshi Sahastranshu. All rights reserved.</p>
         </div>
     </footer>
+    <script>
+        window.addEventListener('scroll', function() {
+            var nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
 </body>
 </html>
