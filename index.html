@@ -1,173 +1,370 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vector Illustration Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Sadhyarshi Sahastranshu | Java Full Stack Developer</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom CSS and Tailwind Config -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Custom scrollbar for a modern look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111827; /* bg-gray-900 */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #374151; /* bg-gray-700 */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4b5563; /* bg-gray-600 */
+        }
+
+        /* Animation for sections fading in on scroll */
+        .reveal {
+            position: relative;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.8s ease-in-out;
+        }
+        .reveal.active {
+            transform: translateY(0px);
+            opacity: 1;
+        }
+    </style>
+    <script>
+        // Custom Tailwind theme configuration
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#2563eb', // A nice blue for accents
+                        'primary-hover': '#1d4ed8',
+                        'dark-bg': '#0f172a', // A deep slate color for the main background
+                        'card-bg': '#1e293b', // Slate for cards
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-    <!-- Header and Navigation sections remain unchanged -->
-    <header>
-        <div class="banner">
-            <img src="images/sence11.jpg" alt="Your Artwork Banner">
+<body class="bg-dark-bg text-gray-300">
+
+    <!-- Header Navigation -->
+    <header id="header" class="bg-dark-bg/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="#home" class="text-2xl font-bold text-white">Sadhyarshi Sahastranshu</a>
+                </div>
+                <div class="hidden md:block">
+                    <nav class="ml-10 flex items-baseline space-x-4">
+                        <a href="#about" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">About</a>
+                        <a href="#skills" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Skills</a>
+                        <a href="#projects" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Projects</a>
+                        <a href="#experience" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Experience</a>
+                        <a href="#contact" class="px-3 py-2 rounded-md text-sm font-medium text-white bg-primary hover:bg-primary-hover transition-colors">Contact</a>
+                    </nav>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="container">
-            <h1>Sadhyarshi Sahastranshu</h1>
-            <p>Vector Illustrator | Digital Artist | Full Stack Developer</p>
+        <!-- Mobile menu, show/hide based on menu state. -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">About</a>
+                <a href="#skills" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Skills</a>
+                <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Projects</a>
+                <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Experience</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Contact</a>
+            </div>
         </div>
     </header>
-    <nav>
-        <div class="container">
-            <a href="#about" class="nav-item"><i class="bi bi-person-fill"></i> About</a>
-            <a href="#portfolio" class="nav-item"><i class="bi bi-images"></i> Portfolio</a>
-            <a href="#contact" class="nav-item"><i class="bi bi-envelope-fill"></i> Contact</a>
-        </div>
-    </nav>
-    <main>
-        <section id="about" class="container">
-            <h2>About Me</h2>
-            <p>
-                I am a passionate and innovative <strong>Developer</strong> and <strong>Creative Artist</strong> with a strong background in both software development and digital illustration. With expertise in full-stack web development, I have honed my skills in crafting functional and aesthetically pleasing websites. My creative journey also extends to the world of vector illustration, where I bring ideas to life through vibrant and detailed artworks.
-            </p>
-            <p>
-                As a software developer, I specialize in Java and Spring frameworks, leveraging these technologies to build scalable, robust, and efficient web applications. My technical toolkit also includes React, HTML, CSS, and SQL, which I use to create seamless and user-friendly interfaces. My coding philosophy revolves around writing clean, maintainable code that balances functionality with performance.
-            </p>
-            <p>
-                My dual expertise allows me to merge technical precision with artistic expression, creating digital experiences that are not only technically sound but also visually compelling. Whether it's developing dynamic web applications or designing intricate vector graphics, I am committed to excellence in every project I undertake.
-            </p>
-            <div class="technologies">
-                <img src="images/spring.png" alt="Spring Logo" class="tech-logo">
-                <img src="images/java.png" alt="Java Logo" class="tech-logo">
-                <img src="images/html.png" alt="HTML Logo" class="tech-logo">
-                <img src="images/database.png" alt="Database Logo" class="tech-logo">
-                <img src="images/css.png" alt="CSS Logo" class="tech-logo">
-                <img src="images/wordpress.png" alt="WordPress Logo" class="tech-logo">
-                <img src="images/react.png" alt="React Logo" class="tech-logo">
-            </div>
-            <div class="skills">
-                <h3>Technical Skills</h3>
-                <div class="progress">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">Java</div>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center">
+            <div class="w-full flex flex-col-reverse md:flex-row items-center justify-between">
+                <div class="md:w-3/5 text-center md:text-left">
+                    <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight mb-4">
+                        Java Full Stack Developer
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-400 mb-8">
+                        Experienced Java Developer proficient in delivering full-stack solutions, optimizing system performance, and solving intricate technical problems.
+                    </p>
+                    <div class="flex justify-center md:justify-start space-x-4">
+                        <a href="https://github.com/sadhyarshi" target="_blank" class="text-gray-400 hover:text-primary transition-colors">
+                            <i data-lucide="github" class="w-8 h-8"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/sadhyarshi/" target="_blank" class="text-gray-400 hover:text-primary transition-colors">
+                            <i data-lucide="linkedin" class="w-8 h-8"></i>
+                        </a>
+                        <a href="mailto:sadhyarshii@gmail.com" class="text-gray-400 hover:text-primary transition-colors">
+                             <i data-lucide="mail" class="w-8 h-8"></i>
+                        </a>
+                    </div>
+                    <div class="mt-8">
+                         <a href="#projects" class="inline-block bg-primary text-white font-semibold py-3 px-8 rounded-lg hover:bg-primary-hover transition-colors duration-300 shadow-lg">View My Work</a>
+                    </div>
                 </div>
-                <div class="progress mt-3">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">Spring Framework</div>
-                </div>
-                <div class="progress mt-3">
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">React</div>
-                </div>
-                <div class="progress mt-3">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 85%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">HTML/CSS</div>
-                </div>
-                <div class="progress mt-3">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">SQL</div>
-                </div>
-                <div class="progress mt-3">
-                    <div class="progress-bar bg-secondary" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">Python</div>
+                <div class="md:w-2/5 mb-10 md:mb-0 flex justify-center">
+                    <img src="https://placehold.co/400x400/1e293b/ffffff?text=SS" alt="Sadhyarshi Sahastranshu" class="rounded-full w-64 h-64 md:w-80 md:h-80 object-cover border-4 border-primary shadow-2xl">
                 </div>
             </div>
         </section>
-        <section id="portfolio" class="container">
-            <h2>Portfolio</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <img src="images/manindra.jpg" class="card-img-top" alt="Artwork 1">
-                        <div class="card-body">
-                            <h5 class="card-title"></h5>
-                            <p class="card-text"></p>
-                            <a href="" class="btn btn-primary" target="_blank">View Project</a>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 reveal">
+            <h2 class="text-3xl font-bold text-center text-white mb-2">About Me</h2>
+            <div class="w-20 h-1 bg-primary mx-auto mb-12"></div>
+            <div class="max-w-4xl mx-auto text-center text-gray-400 text-lg leading-relaxed">
+                <p>
+                    I am an experienced Java Developer with a solid background in web services and complex application development. Proficient in delivering full-stack solutions, optimizing system performance, and solving intricate technical problems using Java, Spring Boot, React, SQL, and AWS. I am seeking to contribute effectively to a driven professional team.
+                </p>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20 reveal">
+            <h2 class="text-3xl font-bold text-center text-white mb-2">My Tech Stack</h2>
+            <div class="w-20 h-1 bg-primary mx-auto mb-12"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Backend -->
+                <div class="bg-card-bg p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-white mb-4 text-center">Backend</h3>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">Java</span>
+                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">Python</span>
+                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">Spring Boot</span>
+                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">Hibernate</span>
+                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">Node.js</span>
+                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">FastAPI</span>
+                    </div>
+                </div>
+                <!-- Frontend -->
+                <div class="bg-card-bg p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-white mb-4 text-center">Frontend</h3>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">React</span>
+                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">JavaScript</span>
+                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">Java Swing</span>
+                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">HTML5 & CSS3</span>
+                    </div>
+                </div>
+                <!-- Database & Tools -->
+                <div class="bg-card-bg p-6 rounded-lg shadow-lg md:col-span-2 lg:col-span-1">
+                    <h3 class="text-xl font-semibold text-white mb-4 text-center">Databases & Tools</h3>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">MySQL</span>
+                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">PostgreSQL</span>
+                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">MongoDB</span>
+                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">Redis</span>
+                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">AWS</span>
+                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">Git</span>
+                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">Docker</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-20 reveal">
+            <h2 class="text-3xl font-bold text-center text-white mb-2">Featured Projects</h2>
+            <div class="w-20 h-1 bg-primary mx-auto mb-12"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="bg-card-bg rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                    <img src="https://placehold.co/600x400/0f172a/38bdf8?text=Inventory+App" alt="Inventory and Migration Application" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-white mb-2">Inventory and Migration Application</h3>
+                        <p class="text-gray-400 mb-4">A comprehensive app to manage inventory levels and streamline data migration for enterprise clients.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs bg-primary/20 text-primary py-1 px-2 rounded-full">Java</span>
+                            <span class="text-xs bg-primary/20 text-primary py-1 px-2 rounded-full">Spring Boot</span>
+                            <span class="text-xs bg-primary/20 text-primary py-1 px-2 rounded-full">React</span>
+                            <span class="text-xs bg-primary/20 text-primary py-1 px-2 rounded-full">PostgreSQL</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-primary hover:underline">GitHub</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <img src="images/dinesh.jpg" class="card-img-top" alt="Artwork 2">
-                        <div class="card-body">
-                            <h5 class="card-title"></h5>
-                            <p class="card-text"></p>
-                            <a href="" class="btn btn-primary" target="_blank">View Project</a>
+                <!-- Project 2 -->
+                <div class="bg-card-bg rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                    <img src="https://placehold.co/600x400/0f172a/a78bfa?text=Image+Editor" alt="Web-Based Image Editor" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-white mb-2">Web-Based Image Editor</h3>
+                        <p class="text-gray-400 mb-4">A lightweight, web-based image editor using React and native JavaScript/HTML5 Canvas APIs.</p>
+                         <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs bg-primary/20 text-primary py-1 px-2 rounded-full">React</span>
+                            <span class="text-xs bg-primary/20 text-primary py-1 px-2 rounded-full">JavaScript</span>
+                             <span class="text-xs bg-primary/20 text-primary py-1 px-2 rounded-full">HTML5 Canvas</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-primary hover:underline">GitHub</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <img src="images/star couple1.jpg" class="card-img-top" alt="Artwork 3">
-                        <div class="card-body">
-                            <h5 class="card-title"></h5>
-                            <p class="card-text"></p>
-                            <a href="" class="btn btn-primary" target="_blank">View Project</a>
+                <!-- Project 3 -->
+                <div class="bg-card-bg rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                    <img src="https://placehold.co/600x400/0f172a/f472b6?text=AI+Chat+App" alt="AI-Powered Chat Application" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-white mb-2">AI-Powered Chat Application</h3>
+                        <p class="text-gray-400 mb-4">A full-stack chat application utilizing FastAPI (Python) for the backend and React for the frontend, integrated with Gemini AI.</p>
+                         <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs bg-primary/20 text-primary py-1 px-2 rounded-full">Python</span>
+                            <span class="text-xs bg-primary/20 text-primary py-1 px-2 rounded-full">FastAPI</span>
+                            <span class="text-xs bg-primary/20 text-primary py-1 px-2 rounded-full">React</span>
+                             <span class="text-xs bg-primary/20 text-primary py-1 px-2 rounded-full">Gemini AI</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-primary hover:underline">GitHub</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <section id="portfolio" class="container">
-            <h2>My Work</h2>
-            <div class="gallery">
-                <div class="gallery-item">
-                    <img src="images/dinesh.jpg" alt="Alone boy">
-                    <p>Loneliness</p>
+
+        <!-- Experience Section -->
+        <section id="experience" class="py-20 reveal">
+            <h2 class="text-3xl font-bold text-center text-white mb-2">Work Experience</h2>
+            <div class="w-20 h-1 bg-primary mx-auto mb-12"></div>
+            <div class="max-w-3xl mx-auto">
+                <div class="relative border-l-2 border-gray-700">
+                    <!-- Experience Item 1 -->
+                    <div class="mb-8 ml-6">
+                         <span class="absolute flex items-center justify-center w-6 h-6 bg-primary rounded-full -left-3 ring-8 ring-dark-bg">
+                            <i data-lucide="briefcase" class="w-3 h-3 text-white"></i>
+                        </span>
+                        <h3 class="flex items-center mb-1 text-lg font-semibold text-white">Software Developer <span class="text-primary bg-primary/20 text-sm font-medium mr-2 px-2.5 py-0.5 rounded ml-3">Current</span></h3>
+                        <time class="block mb-2 text-sm font-normal leading-none text-gray-500">Contract/Self-Employed | Dec 2023 - Present</time>
+                        <p class="text-base font-normal text-gray-400">Developed specialized applications for clients in healthcare, e-commerce, and for an NGO. Engineered backend services using Java/Spring Boot and designed complex SQL queries.</p>
+                    </div>
+                     <!-- Experience Item 2 -->
+                    <div class="mb-8 ml-6">
+                        <span class="absolute flex items-center justify-center w-6 h-6 bg-primary rounded-full -left-3 ring-8 ring-dark-bg">
+                             <i data-lucide="briefcase" class="w-3 h-3 text-white"></i>
+                        </span>
+                        <h3 class="text-lg font-semibold text-white">Software Engineer</h3>
+                        <time class="block mb-2 text-sm font-normal leading-none text-gray-500">Vir Softech, Noida | Jun 2023 - Nov 2023</time>
+                        <p class="text-base font-normal text-gray-400">Developed robust web applications and REST APIs using Java Spring Boot within a microservices architecture. Delivered full-stack solutions using React and PostgreSQL/MySQL.</p>
+                    </div>
+                     <!-- Experience Item 3 -->
+                    <div class="ml-6">
+                        <span class="absolute flex items-center justify-center w-6 h-6 bg-primary rounded-full -left-3 ring-8 ring-dark-bg">
+                             <i data-lucide="briefcase" class="w-3 h-3 text-white"></i>
+                        </span>
+                        <h3 class="text-lg font-semibold text-white">Intern</h3>
+                        <time class="block mb-2 text-sm font-normal leading-none text-gray-500">Cognizant, Pune | Feb 2021 - Jun 2021</time>
+                        <p class="text-base font-normal text-gray-400">Led a project group in full-stack development using Java, Spring Boot, Hibernate, and React, focusing on application efficiency and database management.</p>
+                    </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="images/choubey ji.jpg" alt="Choubey ji">
-                    <p>Choubey Ji</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="images/girl new artwork.jpg" alt="Girl Artwork">
-                    <p>Random</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="images/cccccccccccccccccccccccc.png" alt="Artwork">
-                    <p>Random</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="images/sence11.jpg" alt="Artwork">
-                    <p>Random</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="images/root chakra.jpg" alt="Artwork">
-                    <p>Random</p>
-                </div>
-                <!-- Repeat gallery items for more illustrations -->
             </div>
         </section>
-        <section id="contact" class="container">
-            <h2>Contact</h2>
-            <p>If you'd like to work with me or have any questions, feel free to reach out.</p>
-            <ul>
-                <li><i class="bi bi-envelope-fill"></i> Email: <a href="mailto:your.email@example.com"></a></li>
-                <li><i class="bi bi-linkedin"></i> LinkedIn: <a href="https://linkedin.com/in/sadhyarshi" target="_blank">linkedin.com/in/sadhyarshi</a></li>
-                <li><i class="bi bi-camera-fill"></i> Shutterstock: <a href="https://shutterstock.com/g/sadhyarshi" target="_blank">shutterstock.com/g/sadhyarshi</a></li>
-            </ul>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 text-center reveal">
+            <h2 class="text-3xl font-bold text-white mb-2">Get In Touch</h2>
+             <div class="w-20 h-1 bg-primary mx-auto mb-8"></div>
+            <p class="max-w-2xl mx-auto text-gray-400 mb-8">
+                I'm currently open to new opportunities and collaborations. Feel free to reach out if you have a project in mind or just want to connect!
+            </p>
+            <a href="mailto:sadhyarshii@gmail.com" class="inline-block bg-primary text-white font-semibold py-3 px-8 rounded-lg hover:bg-primary-hover transition-colors duration-300 shadow-lg">
+                Say Hello
+            </a>
         </section>
+
     </main>
-    <footer>
-        <div class="container">
-            <ul class="footer-links">
-                <li><a href="#about"><i class="bi bi-person-fill"></i> About</a></li>
-                <li><a href="#portfolio"><i class="bi bi-images"></i> Portfolio</a></li>
-                <li><a href="#contact"><i class="bi bi-envelope-fill"></i> Contact</a></li>
-            </ul>
-            <div class="social-media">
-                <a href="https://linkedin.com/in/sadhyarshi" target="_blank"><i class="bi bi-linkedin"></i></a>
-                <a href="https://shutterstock.com/g/sadhyarshi" target="_blank"><i class="bi bi-camera"></i></a>
-                <!-- Add more social media icons as needed -->
-            </div>
-            <p>&copy; 2024 Sadhyarshi Sahastranshu. All rights reserved.</p>
+
+    <!-- Footer -->
+    <footer class="bg-card-bg py-6">
+        <div class="container mx-auto px-4 text-center text-gray-500">
+            <p>&copy; 2025 Sadhyarshi Sahastranshu. All rights reserved.</p>
         </div>
     </footer>
+
+
     <script>
-        window.addEventListener('scroll', function() {
-            var nav = document.querySelector('nav');
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            // Toggle icons
+            mobileMenuButton.querySelectorAll('svg').forEach(icon => icon.classList.toggle('hidden'));
+        });
+        
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('#mobile-menu a, .flex-shrink-0 a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    // Ensure the correct icon is shown after closing
+                    mobileMenuButton.querySelector('svg:first-child').classList.remove('hidden');
+                    mobileMenuButton.querySelector('svg:last-child').classList.add('hidden');
+                }
+            });
+        });
+
+        // Header shadow on scroll
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
+                header.classList.add('shadow-lg');
             } else {
-                nav.classList.remove('scrolled');
+                header.classList.remove('shadow-lg');
             }
         });
+        
+        // Scroll Reveal Animation
+        const reveal = () => {
+            const reveals = document.querySelectorAll('.reveal');
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const revealTop = reveals[i].getBoundingClientRect().top;
+                const revealPoint = 50; // Triggers when 50px of the element is visible
+
+                if (revealTop < windowHeight - revealPoint) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        };
+
+        window.addEventListener('scroll', reveal);
+        // Trigger on load as well
+        reveal();
     </script>
 </body>
 </html>
+
