@@ -3,365 +3,620 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sadhyarshi Sahastranshu | Java Full Stack Developer</title>
+    <title>Sadhyarshi Sahastranshu | Full Stack Engineer</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts: Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Custom CSS and Tailwind Config -->
     <style>
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --surface2: #1a1a26;
+            --border: #ffffff12;
+            --accent: #6c63ff;
+            --accent2: #ff6584;
+            --text: #e2e2f0;
+            --muted: #7a7a9a;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
-            font-family: 'Poppins', sans-serif;
-        }
-        /* Custom scrollbar for a modern look */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #111827; /* bg-gray-900 */
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #374151; /* bg-gray-700 */
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #4b5563; /* bg-gray-600 */
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
         }
 
-        /* Animation for sections fading in on scroll */
+        h1, h2, h3, .font-display {
+            font-family: 'Syne', sans-serif;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+
+        /* Noise texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        /* Gradient orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .orb-1 { width: 500px; height: 500px; background: rgba(108,99,255,0.12); top: -100px; left: -100px; }
+        .orb-2 { width: 400px; height: 400px; background: rgba(255,101,132,0.08); bottom: 20%; right: -50px; }
+        .orb-3 { width: 300px; height: 300px; background: rgba(108,99,255,0.07); bottom: -50px; left: 30%; }
+
+        main, header, footer { position: relative; z-index: 1; }
+
+        /* Header */
+        #header {
+            background: rgba(10,10,15,0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Nav links */
+        .nav-link {
+            color: var(--muted);
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .nav-link:hover { color: var(--text); background: var(--border); }
+        .nav-cta {
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 6px 18px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .nav-cta:hover { opacity: 0.85; }
+
+        /* Section titles */
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+        .section-line {
+            width: 48px; height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            border-radius: 2px;
+            margin: 10px auto 3rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .card:hover {
+            border-color: rgba(108,99,255,0.35);
+            transform: translateY(-4px);
+        }
+
+        /* Skill tags */
+        .skill-tag {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 6px 14px;
+            border-radius: 99px;
+            font-size: 0.85rem;
+        }
+
+        /* Project badges */
+        .tech-badge {
+            background: rgba(108,99,255,0.15);
+            color: #a89dff;
+            border: 1px solid rgba(108,99,255,0.25);
+            font-size: 0.72rem;
+            padding: 3px 10px;
+            border-radius: 99px;
+        }
+
+        /* Timeline */
+        .timeline-dot {
+            width: 28px; height: 28px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 0 0 6px rgba(108,99,255,0.12);
+        }
+        .timeline-line { border-left: 2px solid var(--border); }
+
+        /* Reveal animations */
         .reveal {
-            position: relative;
-            transform: translateY(100px);
             opacity: 0;
-            transition: all 0.8s ease-in-out;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
         }
-        .reveal.active {
-            transform: translateY(0px);
-            opacity: 1;
-        }
-    </style>
-    <script>
-        // Custom Tailwind theme configuration
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#2563eb', // A nice blue for accents
-                        'primary-hover': '#1d4ed8',
-                        'dark-bg': '#0f172a', // A deep slate color for the main background
-                        'card-bg': '#1e293b', // Slate for cards
-                    }
-                }
-            }
-        }
-    </script>
-</head>
-<body class="bg-dark-bg text-gray-300">
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
-    <!-- Header Navigation -->
-    <header id="header" class="bg-dark-bg/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        /* Hero badge */
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 99px;
+            padding: 6px 16px;
+            font-size: 0.82rem;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+        }
+        .hero-badge-dot {
+            width: 7px; height: 7px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Button */
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 10px;
+            display: inline-block;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+        .btn-outline {
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-weight: 500;
+            padding: 12px 30px;
+            border-radius: 10px;
+            display: inline-block;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .btn-outline:hover { border-color: var(--accent); background: rgba(108,99,255,0.08); }
+
+        /* Social icons */
+        .social-link { color: var(--muted); transition: color 0.2s; }
+        .social-link:hover { color: var(--accent); }
+
+        /* Stats */
+        .stat-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        /* Cert card */
+        .cert-card {
+            background: linear-gradient(135deg, rgba(108,99,255,0.1), rgba(255,101,132,0.06));
+            border: 1px solid rgba(108,99,255,0.2);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+        }
+
+        /* Mobile menu */
+        #mobile-menu { background: var(--surface); border-top: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0">
-                    <a href="#home" class="text-2xl font-bold text-white">Sadhyarshi Sahastranshu</a>
-                </div>
-                <div class="hidden md:block">
-                    <nav class="ml-10 flex items-baseline space-x-4">
-                        <a href="#about" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">About</a>
-                        <a href="#skills" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Skills</a>
-                        <a href="#projects" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Projects</a>
-                        <a href="#experience" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Experience</a>
-                        <a href="#contact" class="px-3 py-2 rounded-md text-sm font-medium text-white bg-primary hover:bg-primary-hover transition-colors">Contact</a>
-                    </nav>
-                </div>
-                <!-- Mobile menu button -->
-                <div class="-mr-2 flex md:hidden">
-                    <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                        <span class="sr-only">Open main menu</span>
-                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
+                <a href="#home" class="font-display text-white font-bold text-lg tracking-tight">SS<span style="color:var(--accent)">.</span></a>
+                <nav class="hidden md:flex items-center gap-1">
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#skills" class="nav-link">Skills</a>
+                    <a href="#experience" class="nav-link">Experience</a>
+                    <a href="#projects" class="nav-link">Projects</a>
+                    <a href="#contact" class="nav-cta ml-2">Contact</a>
+                </nav>
+                <button id="mobile-menu-button" class="md:hidden p-2 rounded-lg text-gray-400 hover:text-white">
+                    <svg class="block h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
             </div>
         </div>
-        <!-- Mobile menu, show/hide based on menu state. -->
         <div class="md:hidden hidden" id="mobile-menu">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">About</a>
-                <a href="#skills" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Skills</a>
-                <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Projects</a>
-                <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Experience</a>
-                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Contact</a>
+            <div class="px-4 py-3 space-y-1">
+                <a href="#about" class="block nav-link">About</a>
+                <a href="#skills" class="block nav-link">Skills</a>
+                <a href="#experience" class="block nav-link">Experience</a>
+                <a href="#projects" class="block nav-link">Projects</a>
+                <a href="#contact" class="block nav-link">Contact</a>
             </div>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <!-- Hero Section -->
-        <section id="home" class="min-h-screen flex items-center">
-            <div class="w-full flex flex-col-reverse md:flex-row items-center justify-between">
-                <div class="md:w-3/5 text-center md:text-left">
-                    <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight mb-4">
-                        Java Full Stack Developer
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Hero -->
+        <section id="home" class="min-h-screen flex items-center pt-16">
+            <div class="w-full grid md:grid-cols-5 gap-12 items-center">
+                <div class="md:col-span-3">
+                    <div class="hero-badge">
+                        <span class="hero-badge-dot"></span>
+                        Open to new opportunities
+                    </div>
+                    <h1 style="font-family:'Syne',sans-serif; font-size:clamp(2.5rem,6vw,4.5rem); font-weight:800; color:#fff; line-height:1.05; letter-spacing:-1px;" class="mb-5">
+                        Full Stack<br><span style="color:var(--accent)">Software</span><br>Engineer
                     </h1>
-                    <p class="text-lg md:text-xl text-gray-400 mb-8">
-                        Experienced Java Developer proficient in delivering full-stack solutions, optimizing system performance, and solving intricate technical problems.
+                    <p style="color:var(--muted); font-size:1.05rem; line-height:1.75; max-width:480px;" class="mb-8">
+                        Results-driven engineer building end-to-end web applications with <strong style="color:var(--text)">Java Spring Boot</strong> and <strong style="color:var(--text)">React.js</strong> — from scalable microservices to production-grade systems across Healthcare, E-commerce, and NGO domains.
                     </p>
-                    <div class="flex justify-center md:justify-start space-x-4">
-                        <a href="https://github.com/sadhyarshi" target="_blank" class="text-gray-400 hover:text-primary transition-colors">
-                            <i data-lucide="github" class="w-8 h-8"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/in/sadhyarshi/" target="_blank" class="text-gray-400 hover:text-primary transition-colors">
-                            <i data-lucide="linkedin" class="w-8 h-8"></i>
-                        </a>
-                        <a href="mailto:sadhyarshii@gmail.com" class="text-gray-400 hover:text-primary transition-colors">
-                             <i data-lucide="mail" class="w-8 h-8"></i>
-                        </a>
+                    <div class="flex items-center gap-4 flex-wrap mb-10">
+                        <a href="#projects" class="btn-primary">View My Work</a>
+                        <a href="mailto:sadhyarshii@gmail.com" class="btn-outline">Get In Touch</a>
                     </div>
-                    <div class="mt-8">
-                         <a href="#projects" class="inline-block bg-primary text-white font-semibold py-3 px-8 rounded-lg hover:bg-primary-hover transition-colors duration-300 shadow-lg">View My Work</a>
+                    <div class="flex items-center gap-5">
+                        <a href="https://github.com/sadhyarshi" target="_blank" class="social-link"><i data-lucide="github" class="w-5 h-5"></i></a>
+                        <a href="https://www.linkedin.com/in/sadhyarshi/" target="_blank" class="social-link"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                        <a href="mailto:sadhyarshii@gmail.com" class="social-link"><i data-lucide="mail" class="w-5 h-5"></i></a>
+                        <a href="tel:+918850275495" class="social-link"><i data-lucide="phone" class="w-5 h-5"></i></a>
                     </div>
                 </div>
-                <div class="md:w-2/5 mb-10 md:mb-0 flex justify-center">
-                    <img src="https://placehold.co/400x400/1e293b/ffffff?text=SS" alt="Sadhyarshi Sahastranshu" class="rounded-full w-64 h-64 md:w-80 md:h-80 object-cover border-4 border-primary shadow-2xl">
-                </div>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="py-20 reveal">
-            <h2 class="text-3xl font-bold text-center text-white mb-2">About Me</h2>
-            <div class="w-20 h-1 bg-primary mx-auto mb-12"></div>
-            <div class="max-w-4xl mx-auto text-center text-gray-400 text-lg leading-relaxed">
-                <p>
-                    I am an experienced Java Developer with a solid background in web services and complex application development. Proficient in delivering full-stack solutions, optimizing system performance, and solving intricate technical problems using Java, Spring Boot, React, SQL, and AWS. I am seeking to contribute effectively to a driven professional team.
-                </p>
-            </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section id="skills" class="py-20 reveal">
-            <h2 class="text-3xl font-bold text-center text-white mb-2">My Tech Stack</h2>
-            <div class="w-20 h-1 bg-primary mx-auto mb-12"></div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Backend -->
-                <div class="bg-card-bg p-6 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold text-white mb-4 text-center">Backend</h3>
-                    <div class="flex flex-wrap justify-center gap-4">
-                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">Java</span>
-                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">Python</span>
-                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">Spring Boot</span>
-                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">Hibernate</span>
-                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">FastAPI</span>
-                    </div>
-                </div>
-                <!-- Frontend -->
-                <div class="bg-card-bg p-6 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold text-white mb-4 text-center">Frontend</h3>
-                    <div class="flex flex-wrap justify-center gap-4">
-                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">React</span>
-                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">JavaScript</span>
-                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">Java Swing</span>
-                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">HTML5 & CSS3</span>
-                    </div>
-                </div>
-                <!-- Database & Tools -->
-                <div class="bg-card-bg p-6 rounded-lg shadow-lg md:col-span-2 lg:col-span-1">
-                    <h3 class="text-xl font-semibold text-white mb-4 text-center">Databases & Tools</h3>
-                    <div class="flex flex-wrap justify-center gap-4">
-                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">MySQL</span>
-                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">PostgreSQL</span>
-                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">MongoDB</span>
-                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">Redis</span>
-                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">AWS</span>
-                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">Git</span>
-                        <span class="bg-gray-700 text-gray-200 py-2 px-4 rounded-full">Docker</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects" class="py-20 reveal">
-            <h2 class="text-3xl font-bold text-center text-white mb-2">Featured Projects</h2>
-            <div class="w-20 h-1 bg-primary mx-auto mb-12"></div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project 1 -->
-                <div class="bg-card-bg rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
-                    <img src="https://placehold.co/600x400/0f172a/38bdf8?text=Job Market Analyzer" alt="Inventory and Migration Application" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-white mb-2">Twitter Job Market Analyzer</h3>
-                        <p class="text-gray-400 mb-4">A comprehensive Python-based solution for scraping, analyzing, and reporting on Twitter job market data. This project provides automated data collection.</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="text-xs bg-primary/20 text-primary py-1 px-2 rounded-full">Python</span>
-        
+                <div class="md:col-span-2 flex flex-col items-center gap-5">
+                    <!-- Avatar -->
+                    <div style="position:relative;">
+                        <div style="width:220px;height:220px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));padding:3px;">
+                            <div style="width:100%;height:100%;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;">
+                                <span style="font-family:'Syne',sans-serif;font-size:3.5rem;font-weight:800;color:#fff;">SS</span>
+                            </div>
                         </div>
-                        <div class="flex space-x-4">
-                            <a href="https://github.com/sadhyarshi/twitter-job-market-analyzer" class="text-primary hover:underline">GitHub</a>
+                        <div style="position:absolute;bottom:10px;right:-10px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 14px;">
+                            <p style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:#fff;margin:0;">8.3</p>
+                            <p style="font-size:0.68rem;color:var(--muted);margin:0;">CGPA · BIT Mesra</p>
                         </div>
                     </div>
-                </div>
-                <!-- Project 2 -->
-                <div class="bg-card-bg rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
-                    <img src="https://placehold.co/600x400/0f172a/a78bfa?text=Image+Editor" alt="Web-Based Image Editor" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-white mb-2">Web-Based Image Editor</h3>
-                        <p class="text-gray-400 mb-4">A lightweight, web-based image editor using React and native JavaScript/HTML5 Canvas APIs.</p>
-                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="text-xs bg-primary/20 text-primary py-1 px-2 rounded-full">React</span>
-                            <span class="text-xs bg-primary/20 text-primary py-1 px-2 rounded-full">JavaScript</span>
-                             <span class="text-xs bg-primary/20 text-primary py-1 px-2 rounded-full">HTML5 Canvas</span>
+                    <!-- Quick stats -->
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:260px;">
+                        <div class="card" style="padding:1rem;text-align:center;">
+                            <p class="stat-num">3+</p>
+                            <p style="font-size:0.75rem;color:var(--muted);">Years Exp.</p>
                         </div>
-                        <div class="flex space-x-4">
-                            <a href="https://github.com/sadhyarshi/ImageEditor" class="text-primary hover:underline">GitHub</a>
+                        <div class="card" style="padding:1rem;text-align:center;">
+                            <p class="stat-num">40%</p>
+                            <p style="font-size:0.75rem;color:var(--muted);">DB perf. boost</p>
                         </div>
-                    </div>
-                </div>
-                <!-- Project 3 -->
-                <div class="bg-card-bg rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
-                    <img src="https://placehold.co/600x400/0f172a/f472b6?text=AI+Chat+App" alt="AI-Powered Chat Application" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-white mb-2">AI-Powered Chat Application</h3>
-                        <p class="text-gray-400 mb-4">A full-stack chat application utilizing FastAPI (Python) for the backend and React for the frontend, integrated with Gemini AI.</p>
-                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="text-xs bg-primary/20 text-primary py-1 px-2 rounded-full">Python</span>
-                            <span class="text-xs bg-primary/20 text-primary py-1 px-2 rounded-full">FastAPI</span>
-                            <span class="text-xs bg-primary/20 text-primary py-1 px-2 rounded-full">React</span>
-                             <span class="text-xs bg-primary/20 text-primary py-1 px-2 rounded-full">Gemini AI</span>
+                        <div class="card" style="padding:1rem;text-align:center;">
+                            <p class="stat-num">99.9%</p>
+                            <p style="font-size:0.75rem;color:var(--muted);">Uptime kept</p>
                         </div>
-                        <div class="flex space-x-4">
-                            <a href="https://github.com/sadhyarshi/chatbpt" class="text-primary hover:underline">GitHub</a>
+                        <div class="card" style="padding:1rem;text-align:center;">
+                            <p class="stat-num">90%</p>
+                            <p style="font-size:0.75rem;color:var(--muted);">Manual work cut</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Experience Section -->
-        <section id="experience" class="py-20 reveal">
-            <h2 class="text-3xl font-bold text-center text-white mb-2">Work Experience</h2>
-            <div class="w-20 h-1 bg-primary mx-auto mb-12"></div>
+        <!-- About -->
+        <section id="about" class="py-24 reveal">
+            <h2 class="section-title text-center">About Me</h2>
+            <div class="section-line"></div>
             <div class="max-w-3xl mx-auto">
-                <div class="relative border-l-2 border-gray-700">
-                    <!-- Experience Item 1 -->
-                    <div class="mb-8 ml-6">
-                         <span class="absolute flex items-center justify-center w-6 h-6 bg-primary rounded-full -left-3 ring-8 ring-dark-bg">
-                            <i data-lucide="briefcase" class="w-3 h-3 text-white"></i>
-                        </span>
-                        <h3 class="flex items-center mb-1 text-lg font-semibold text-white">Software Developer <span class="text-primary bg-primary/20 text-sm font-medium mr-2 px-2.5 py-0.5 rounded ml-3">Current</span></h3>
-                        <time class="block mb-2 text-sm font-normal leading-none text-gray-500">Contract/Self-Employed | Dec 2023 - Present</time>
-                        <p class="text-base font-normal text-gray-400">Developed specialized applications for clients in healthcare, e-commerce, and for an NGO. Engineered backend services using Java/Spring Boot and designed complex SQL queries.</p>
+                <p style="color:var(--muted);font-size:1.05rem;line-height:1.85;text-align:center;margin-bottom:2.5rem;">
+                    I'm a Full Stack Software Engineer with a <strong style="color:var(--text)">Master of Computer Application (MCA)</strong> from <strong style="color:var(--text)">Birla Institute of Technology, Mesra</strong> (CGPA: 8.3). I specialize in architecting microservices, designing scalable RESTful APIs, and delivering production-grade systems. I'm passionate about Clean Code, System Design, and software that solves real problems at scale.
+                </p>
+                <div class="cert-card flex items-start gap-4">
+                    <div style="width:40px;height:40px;background:rgba(108,99,255,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i data-lucide="award" style="width:18px;height:18px;color:var(--accent);"></i>
                     </div>
-                     <!-- Experience Item 2 -->
-                    <div class="mb-8 ml-6">
-                        <span class="absolute flex items-center justify-center w-6 h-6 bg-primary rounded-full -left-3 ring-8 ring-dark-bg">
-                             <i data-lucide="briefcase" class="w-3 h-3 text-white"></i>
-                        </span>
-                        <h3 class="text-lg font-semibold text-white">Software Engineer</h3>
-                        <time class="block mb-2 text-sm font-normal leading-none text-gray-500">Vir Softech, Noida | Jun 2023 - Nov 2023</time>
-                        <p class="text-base font-normal text-gray-400">Developed robust web applications and REST APIs using Java Spring Boot within a microservices architecture. Delivered full-stack solutions using React and PostgreSQL/MySQL.</p>
-                    </div>
-                     <!-- Experience Item 3 -->
-                    <div class="ml-6">
-                        <span class="absolute flex items-center justify-center w-6 h-6 bg-primary rounded-full -left-3 ring-8 ring-dark-bg">
-                             <i data-lucide="briefcase" class="w-3 h-3 text-white"></i>
-                        </span>
-                        <h3 class="text-lg font-semibold text-white">Intern</h3>
-                        <time class="block mb-2 text-sm font-normal leading-none text-gray-500">Cognizant, Pune | Feb 2021 - Jun 2021</time>
-                        <p class="text-base font-normal text-gray-400">Led a project group in full-stack development using Java, Spring Boot, Hibernate, and React, focusing on application efficiency and database management.</p>
+                    <div>
+                        <p style="color:#fff;font-weight:600;margin:0 0 4px;">Programming for Everybody (Getting Started with Python)</p>
+                        <p style="color:var(--muted);font-size:0.85rem;margin:0;">University of Michigan · Coursera · Score: <strong style="color:#4ade80;">98.34%</strong> · Dec 2020</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="py-20 text-center reveal">
-            <h2 class="text-3xl font-bold text-white mb-2">Get In Touch</h2>
-             <div class="w-20 h-1 bg-primary mx-auto mb-8"></div>
-            <p class="max-w-2xl mx-auto text-gray-400 mb-8">
-                I'm currently open to new opportunities and collaborations. Feel free to reach out if you have a project in mind or just want to connect!
+        <!-- Skills -->
+        <section id="skills" class="py-24 reveal">
+            <h2 class="section-title text-center">Tech Stack</h2>
+            <div class="section-line"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="card p-6">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.25rem;">
+                        <div style="width:36px;height:36px;background:rgba(108,99,255,0.15);border-radius:9px;display:flex;align-items:center;justify-content:center;">
+                            <i data-lucide="code-2" style="width:16px;height:16px;color:var(--accent);"></i>
+                        </div>
+                        <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:#fff;margin:0;">Languages</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">HTML5/CSS3</span>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.25rem;">
+                        <div style="width:36px;height:36px;background:rgba(255,101,132,0.15);border-radius:9px;display:flex;align-items:center;justify-content:center;">
+                            <i data-lucide="layout" style="width:16px;height:16px;color:var(--accent2);"></i>
+                        </div>
+                        <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:#fff;margin:0;">Frontend</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag">React.js</span>
+                        <span class="skill-tag">Material UI</span>
+                        <span class="skill-tag">Ant Design</span>
+                        <span class="skill-tag">Responsive UI</span>
+                        <span class="skill-tag">REST Integration</span>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.25rem;">
+                        <div style="width:36px;height:36px;background:rgba(108,99,255,0.15);border-radius:9px;display:flex;align-items:center;justify-content:center;">
+                            <i data-lucide="server" style="width:16px;height:16px;color:var(--accent);"></i>
+                        </div>
+                        <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:#fff;margin:0;">Backend & Cloud</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag">Spring Boot</span>
+                        <span class="skill-tag">Microservices</span>
+                        <span class="skill-tag">FastAPI</span>
+                        <span class="skill-tag">REST APIs</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">AWS EC2/S3</span>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.25rem;">
+                        <div style="width:36px;height:36px;background:rgba(255,101,132,0.15);border-radius:9px;display:flex;align-items:center;justify-content:center;">
+                            <i data-lucide="database" style="width:16px;height:16px;color:var(--accent2);"></i>
+                        </div>
+                        <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:#fff;margin:0;">DB & Tools</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">Redis</span>
+                        <span class="skill-tag">Git / CI-CD</span>
+                        <span class="skill-tag">JUnit</span>
+                        <span class="skill-tag">Mockito</span>
+                        <span class="skill-tag">Postman</span>
+                        <span class="skill-tag">Maven</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section id="experience" class="py-24 reveal">
+            <h2 class="section-title text-center">Work Experience</h2>
+            <div class="section-line"></div>
+            <div class="max-w-3xl mx-auto">
+                <div style="position:relative;padding-left:2.5rem;">
+                    <div class="timeline-line" style="position:absolute;left:13px;top:0;bottom:0;"></div>
+
+                    <!-- Job 1 -->
+                    <div style="margin-bottom:2.5rem;position:relative;">
+                        <div class="timeline-dot" style="position:absolute;left:-40px;top:4px;">
+                            <i data-lucide="briefcase" style="width:12px;height:12px;color:#fff;"></i>
+                        </div>
+                        <div class="card p-6">
+                            <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:0.75rem;">
+                                <div>
+                                    <h3 style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;margin:0 0 2px;">Software Engineer</h3>
+                                    <p style="color:var(--accent);font-size:0.9rem;margin:0;">AMPR DSGN LAB (OPC) PVT LTD · Milimeter.co</p>
+                                </div>
+                                <span style="background:rgba(74,222,128,0.1);color:#4ade80;border:1px solid rgba(74,222,128,0.25);font-size:0.75rem;padding:3px 10px;border-radius:99px;white-space:nowrap;">Aug 2025 – Jan 2026</span>
+                            </div>
+                            <p style="color:var(--muted);font-size:0.8rem;margin:0 0 1rem;">Noida, India (Remote)</p>
+                            <ul style="color:var(--muted);font-size:0.9rem;line-height:1.8;list-style:none;padding:0;margin:0 0 1rem;">
+                                <li style="padding-left:1.2em;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">›</span>Built full-stack e-commerce features using Java Spring Boot APIs and React.js for order processing, vendor sync, and inventory management.</li>
+                                <li style="padding-left:1.2em;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">›</span>Developed FastAPI microservices for bulk data processing, reducing manual product cataloging time by <strong style="color:#fff;">90%</strong>.</li>
+                                <li style="padding-left:1.2em;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">›</span>Integrated Python-based inventory analyzers with Shopify Liquid, automating the end-to-end product pipeline.</li>
+                            </ul>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-badge">Java Spring Boot</span>
+                                <span class="tech-badge">Python FastAPI</span>
+                                <span class="tech-badge">React.js</span>
+                                <span class="tech-badge">PostgreSQL</span>
+                                <span class="tech-badge">Shopify Liquid</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Job 2 -->
+                    <div style="margin-bottom:2.5rem;position:relative;">
+                        <div class="timeline-dot" style="position:absolute;left:-40px;top:4px;">
+                            <i data-lucide="briefcase" style="width:12px;height:12px;color:#fff;"></i>
+                        </div>
+                        <div class="card p-6">
+                            <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:0.75rem;">
+                                <div>
+                                    <h3 style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;margin:0 0 2px;">Software Engineer</h3>
+                                    <p style="color:var(--accent);font-size:0.9rem;margin:0;">Life Care Hospital And Healthcare Pvt Ltd</p>
+                                </div>
+                                <span style="background:rgba(108,99,255,0.12);color:#a89dff;border:1px solid rgba(108,99,255,0.25);font-size:0.75rem;padding:3px 10px;border-radius:99px;white-space:nowrap;">Dec 2023 – Jun 2025</span>
+                            </div>
+                            <p style="color:var(--muted);font-size:0.8rem;margin:0 0 1rem;">Hazaribagh, India</p>
+                            <ul style="color:var(--muted);font-size:0.9rem;line-height:1.8;list-style:none;padding:0;margin:0 0 1rem;">
+                                <li style="padding-left:1.2em;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">›</span>Owned full lifecycle of a Hospital Management System (HMS) — Java Spring Boot backend with React.js dashboard, maintaining <strong style="color:#fff;">99.9% uptime</strong> for 100+ daily users.</li>
+                                <li style="padding-left:1.2em;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">›</span>Built RESTful APIs and frontend modules for patient records, billing, appointment management, and real-time reporting.</li>
+                                <li style="padding-left:1.2em;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">›</span>Improved database performance by <strong style="color:#fff;">40%</strong> through advanced indexing, query optimization, and connection pooling.</li>
+                                <li style="padding-left:1.2em;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">›</span>Automated administrative reporting with PostgreSQL queries and Python scripts, saving <strong style="color:#fff;">10+ hours/week</strong>.</li>
+                            </ul>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-badge">Java Spring Boot</span>
+                                <span class="tech-badge">React.js</span>
+                                <span class="tech-badge">PostgreSQL</span>
+                                <span class="tech-badge">Python</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Job 3 -->
+                    <div style="position:relative;">
+                        <div class="timeline-dot" style="position:absolute;left:-40px;top:4px;">
+                            <i data-lucide="briefcase" style="width:12px;height:12px;color:#fff;"></i>
+                        </div>
+                        <div class="card p-6">
+                            <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:0.75rem;">
+                                <div>
+                                    <h3 style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;margin:0 0 2px;">Software Engineer</h3>
+                                    <p style="color:var(--accent);font-size:0.9rem;margin:0;">Vir Softech</p>
+                                </div>
+                                <span style="background:rgba(108,99,255,0.12);color:#a89dff;border:1px solid rgba(108,99,255,0.25);font-size:0.75rem;padding:3px 10px;border-radius:99px;white-space:nowrap;">Jun 2023 – Nov 2023</span>
+                            </div>
+                            <p style="color:var(--muted);font-size:0.8rem;margin:0 0 1rem;">Noida, India</p>
+                            <ul style="color:var(--muted);font-size:0.9rem;line-height:1.8;list-style:none;padding:0;margin:0 0 1rem;">
+                                <li style="padding-left:1.2em;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">›</span>Developed scalable microservices using Java Spring Boot and PostgreSQL for high-traffic production modules.</li>
+                                <li style="padding-left:1.2em;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">›</span>Built responsive React.js UI components integrated with REST APIs, delivering seamless end-to-end user experience.</li>
+                                <li style="padding-left:1.2em;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">›</span>Reduced API response latency by <strong style="color:#fff;">30%</strong> through query optimization, connection pooling, and Redis caching.</li>
+                            </ul>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-badge">Java Spring Boot</span>
+                                <span class="tech-badge">React.js</span>
+                                <span class="tech-badge">PostgreSQL</span>
+                                <span class="tech-badge">Redis</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section id="projects" class="py-24 reveal">
+            <h2 class="section-title text-center">Featured Projects</h2>
+            <div class="section-line"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Project 1 -->
+                <div class="card p-6" style="display:flex;flex-direction:column;">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;">
+                        <div style="width:44px;height:44px;background:linear-gradient(135deg,rgba(108,99,255,0.3),rgba(255,101,132,0.2));border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <i data-lucide="message-square" style="width:20px;height:20px;color:var(--accent);"></i>
+                        </div>
+                        <h3 style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;margin:0;">AI-Powered Chat Application</h3>
+                    </div>
+                    <p style="color:var(--muted);font-size:0.9rem;line-height:1.7;flex:1;margin-bottom:1.25rem;">
+                        A full-stack chat application using FastAPI (Python) for the backend and React for the frontend, integrated with Gemini AI for intelligent, dynamic conversations. Includes secure user authentication and chat-saving functionality.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">FastAPI</span>
+                        <span class="tech-badge">React</span>
+                        <span class="tech-badge">Gemini AI</span>
+                    </div>
+                    <a href="https://github.com/sadhyarshi/chatbpt" target="_blank" style="display:inline-flex;align-items:center;gap:6px;color:var(--accent);font-size:0.88rem;font-weight:500;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
+                        <i data-lucide="github" style="width:15px;height:15px;"></i>
+                        View on GitHub
+                    </a>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="card p-6" style="display:flex;flex-direction:column;">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;">
+                        <div style="width:44px;height:44px;background:linear-gradient(135deg,rgba(255,101,132,0.25),rgba(108,99,255,0.15));border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <i data-lucide="trending-up" style="width:20px;height:20px;color:var(--accent2);"></i>
+                        </div>
+                        <h3 style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;margin:0;">Twitter Job Market Analyzer</h3>
+                    </div>
+                    <p style="color:var(--muted);font-size:0.9rem;line-height:1.7;flex:1;margin-bottom:1.25rem;">
+                        A comprehensive Python solution to scrape and analyze real-time job market trends from Twitter/X. Implements Sentiment Analysis using NLP libraries to categorize job posts and automates the end-to-end data pipeline from collection to professional insight reports.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">NLP</span>
+                        <span class="tech-badge">Sentiment Analysis</span>
+                        <span class="tech-badge">Data Pipeline</span>
+                    </div>
+                    <a href="https://github.com/sadhyarshi/twitter-job-market-analyzer" target="_blank" style="display:inline-flex;align-items:center;gap:6px;color:var(--accent);font-size:0.88rem;font-weight:500;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
+                        <i data-lucide="github" style="width:15px;height:15px;"></i>
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="py-24 text-center reveal">
+            <h2 class="section-title">Let's Build Something</h2>
+            <div class="section-line"></div>
+            <p style="color:var(--muted);font-size:1.05rem;max-width:500px;margin:0 auto 2.5rem;line-height:1.75;">
+                I'm open to full-time roles, contract work, and interesting collaborations. Drop me a line and let's talk.
             </p>
-            <a href="mailto:sadhyarshii@gmail.com" class="inline-block bg-primary text-white font-semibold py-3 px-8 rounded-lg hover:bg-primary-hover transition-colors duration-300 shadow-lg">
-                Say Hello
-            </a>
+            <div class="flex justify-center flex-wrap gap-4">
+                <a href="mailto:sadhyarshii@gmail.com" class="btn-primary" style="display:inline-flex;align-items:center;gap:8px;">
+                    <i data-lucide="mail" style="width:16px;height:16px;"></i>
+                    sadhyarshii@gmail.com
+                </a>
+                <a href="https://www.linkedin.com/in/sadhyarshi/" target="_blank" class="btn-outline" style="display:inline-flex;align-items:center;gap:8px;">
+                    <i data-lucide="linkedin" style="width:16px;height:16px;"></i>
+                    LinkedIn
+                </a>
+            </div>
         </section>
 
     </main>
 
     <!-- Footer -->
-    <footer class="bg-card-bg py-6">
-        <div class="container mx-auto px-4 text-center text-gray-500">
-            <p>&copy; 2025 Sadhyarshi Sahastranshu. All rights reserved.</p>
-        </div>
+    <footer style="border-top:1px solid var(--border);padding:1.5rem 0;text-align:center;">
+        <p style="color:var(--muted);font-size:0.85rem;">© 2025 Sadhyarshi Sahastranshu. All rights reserved.</p>
     </footer>
 
-
     <script>
-        // Initialize Lucide Icons
         lucide.createIcons();
 
-        // Mobile Menu Toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            // Toggle icons
-            mobileMenuButton.querySelectorAll('svg').forEach(icon => icon.classList.toggle('hidden'));
-        });
-        
-        // Close mobile menu when a link is clicked
-        document.querySelectorAll('#mobile-menu a, .flex-shrink-0 a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (!mobileMenu.classList.contains('hidden')) {
-                    mobileMenu.classList.add('hidden');
-                    // Ensure the correct icon is shown after closing
-                    mobileMenuButton.querySelector('svg:first-child').classList.remove('hidden');
-                    mobileMenuButton.querySelector('svg:last-child').classList.add('hidden');
-                }
-            });
-        });
+        // Mobile menu
+        const btn = document.getElementById('mobile-menu-button');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+        document.querySelectorAll('#mobile-menu a').forEach(l => l.addEventListener('click', () => menu.classList.add('hidden')));
 
-        // Header shadow on scroll
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('shadow-lg');
-            } else {
-                header.classList.remove('shadow-lg');
-            }
-        });
-        
-        // Scroll Reveal Animation
+        // Scroll reveal
         const reveal = () => {
-            const reveals = document.querySelectorAll('.reveal');
-            for (let i = 0; i < reveals.length; i++) {
-                const windowHeight = window.innerHeight;
-                const revealTop = reveals[i].getBoundingClientRect().top;
-                const revealPoint = 50; // Triggers when 50px of the element is visible
-
-                if (revealTop < windowHeight - revealPoint) {
-                    reveals[i].classList.add('active');
-                }
-            }
+            document.querySelectorAll('.reveal').forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 60) el.classList.add('active');
+            });
         };
-
         window.addEventListener('scroll', reveal);
-        // Trigger on load as well
         reveal();
     </script>
 </body>
 </html>
-
