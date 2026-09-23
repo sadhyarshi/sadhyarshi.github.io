@@ -3,177 +3,339 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Sadhyarshi — Full-Stack Java Developer &amp; Product Builder</title>
-<meta name="description" content="Sadhyarshi — I build digital products from idea to deployment. Full-stack Java developer, software engineer, product builder." />
+<title>Sadhyarshi — I Build Digital Products</title>
+<meta name="description" content="Sadhyarshi — Full-Stack Java Developer &amp; Software Engineer. A cinematic journey through the products he has built, from idea to deployment." />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23050505%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%2300e0a4%22 font-family=%22monospace%22>S</text></svg>" />
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Custom cursor -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-dot" id="cursorDot"></div>
+<!-- ==================== LOADER ==================== -->
+<div class="loader" id="loader">
+  <div class="loader-word">SADHYARSHI</div>
+  <div class="loader-bar-track"><div class="loader-bar" id="loaderBar"></div></div>
+  <div class="loader-label">LOADING EXPERIENCE&nbsp; <span id="loaderPct">0</span></div>
+</div>
 
-  <!-- Ambient canvas background -->
-  <canvas id="bgCanvas" aria-hidden="true"></canvas>
+<!-- ==================== CURSOR ==================== -->
+<div class="cursor" id="cursor"></div>
 
-  <!-- Progress / section indicator -->
-  <div class="scroll-progress" id="scrollProgress"></div>
+<!-- ==================== AMBIENT CANVAS ==================== -->
+<canvas id="bgCanvas"></canvas>
 
-  <!-- NAV -->
-  <header class="nav" id="siteNav">
-    <div class="nav-inner">
-      <a href="#hero" class="nav-logo">SADHYARSHI</a>
-      <nav class="nav-links">
-        <a href="#projects" data-nav="projects">Projects</a>
-        <a href="#about" data-nav="about">About</a>
-        <a href="#contact" data-nav="contact">Contact</a>
-      </nav>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-      </button>
+<!-- ==================== PROGRESS + SIDE NAV ==================== -->
+<div class="scroll-progress" id="scrollProgress"></div>
+<nav class="side-nav" id="sideNav" aria-label="Section navigation">
+  <div class="side-nav-dot" data-target="hero" data-label="Intro"></div>
+  <div class="side-nav-dot" data-target="p-milimeter" data-label="Milimeter"></div>
+  <div class="side-nav-dot" data-target="p-amritanshu" data-label="Amritanshu"></div>
+  <div class="side-nav-dot" data-target="p-mms" data-label="MMS"></div>
+  <div class="side-nav-dot" data-target="p-hrms" data-label="HRMS"></div>
+  <div class="side-nav-dot" data-target="p-pms" data-label="PMS"></div>
+  <div class="side-nav-dot" data-target="p-offerx" data-label="OfferX"></div>
+  <div class="side-nav-dot" data-target="p-admin" data-label="Admin"></div>
+  <div class="side-nav-dot" data-target="architecture" data-label="Stack"></div>
+  <div class="side-nav-dot" data-target="about" data-label="About"></div>
+  <div class="side-nav-dot" data-target="contact" data-label="Contact"></div>
+</nav>
+
+<header class="brand-mark" id="brandMark"><span>SADHYARSHI</span></header>
+
+<main id="main">
+
+  <!-- ==================== INTRO / HERO ==================== -->
+  <section class="panel hero-panel" id="hero">
+    <div class="panel-inner">
+      <div class="cam hero-cam" id="heroCam">
+        <div class="world-frag frag-a"><div class="mock-browser"><span></span><span></span><span></span></div></div>
+        <div class="world-frag frag-b"><div class="mock-panel"><i></i><i></i><i></i></div></div>
+        <div class="world-frag frag-c"><div class="mock-node"></div></div>
+        <div class="world-frag frag-d"><div class="mock-line"></div></div>
+        <div class="world-frag frag-e"><div class="mock-card"></div></div>
+        <div class="world-frag frag-f"><div class="mock-node small"></div></div>
+        <div class="world-frag frag-g"><div class="mock-code">const idea = () =&gt; ship();</div></div>
+      </div>
+      <div class="hero-text">
+        <p class="hero-line1" id="heroLine1">SADHYARSHI</p>
+        <h1 class="hero-line2" id="heroLine2">
+          <span class="lw">I&nbsp;BUILD</span><br/>
+          <span class="lw">DIGITAL&nbsp;PRODUCTS.</span>
+        </h1>
+      </div>
+      <div class="scroll-hint"><span></span><p>Scroll to begin</p></div>
     </div>
-  </header>
+  </section>
 
-  <!-- HERO -->
-  <section class="hero" id="hero">
-    <div class="hero-scene" id="heroScene">
-      <div class="hero-obj obj-laptop" data-depth="0.6">
-        <div class="device laptop-mini">
-          <div class="laptop-mini-screen">
-            <div class="mini-row"></div>
-            <div class="mini-row short"></div>
-            <div class="mini-grid">
-              <span></span><span></span><span></span><span></span>
+  <!-- ==================== PROJECT 01 — MILIMETER ==================== -->
+  <section class="panel project-panel theme-milimeter" id="p-milimeter" data-index="01">
+    <div class="panel-inner">
+      <div class="cam" id="cam-milimeter">
+        <div class="device-wrap browser-device">
+          <div class="mockup-browser">
+            <div class="browser-chrome"><span></span><span></span><span></span></div>
+            <div class="screen-surface">
+              <div class="ui-glow"></div>
+              <div class="ui-screen">
+                <div class="ui-nav"><span class="ui-brand">MILIMETER</span><div class="ui-dot-row"><span></span><span></span><span></span></div></div>
+                <div class="ui-bar accent" style="width:38%;"></div>
+                <div class="ui-grid ui-cols-3"><div class="ui-card tall"></div><div class="ui-card tall"></div><div class="ui-card tall"></div></div>
+                <div class="ui-grid ui-cols-2"><div class="ui-card short"></div><div class="ui-card short"></div></div>
+              </div>
             </div>
           </div>
+          <div class="frag ui-frag frag-nav">Navigation</div>
+          <div class="frag ui-frag frag-cart"><b>Cart</b>3 items</div>
+          <div class="frag ui-frag frag-product"><b>New Drop</b>Live now</div>
+          <div class="frag ui-frag frag-checkout"><b>Checkout</b>Secure</div>
         </div>
       </div>
-      <div class="hero-obj obj-phone" data-depth="0.9">
-        <div class="device phone-mini">
-          <div class="phone-mini-screen">
-            <div class="mini-pill"></div>
-            <div class="mini-card"></div>
-            <div class="mini-card"></div>
+      <div class="proj-caption">
+        <span class="cap-index">01</span>
+        <h2 class="cap-title">MILIMETER.CO</h2>
+        <p class="cap-sub">E-Commerce</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PROJECT 02 — AMRITANSHU ==================== -->
+  <section class="panel project-panel theme-amritanshu" id="p-amritanshu" data-index="02">
+    <div class="panel-inner">
+      <div class="cam" id="cam-amritanshu">
+        <div class="device-wrap browser-device rotate-device">
+          <div class="mockup-browser">
+            <div class="browser-chrome"><span></span><span></span><span></span></div>
+            <div class="screen-surface">
+              <div class="ui-glow"></div>
+              <div class="ui-screen">
+                <div class="ui-nav"><span class="ui-brand">AMRITANSHU</span><div class="ui-dot-row"><span></span><span></span><span></span></div></div>
+                <div class="ui-bar accent" style="width:30%;"></div>
+                <div class="ui-grid ui-cols-2"><div class="ui-card tall"></div><div class="ui-card tall"></div></div>
+                <div class="ui-grid ui-cols-3"><div class="ui-card short"></div><div class="ui-card short"></div><div class="ui-card short"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="frag ui-frag frag-gallery"><b>Gallery</b>Ceramics</div>
+          <div class="frag ui-frag frag-journal"><b>Journal</b>Latest work</div>
+          <div class="frag ui-frag frag-studio"><b>Milimeter</b>Founder</div>
+        </div>
+      </div>
+      <div class="proj-caption">
+        <span class="cap-index">02</span>
+        <h2 class="cap-title">AMRITANSHUPRAJWAL.COM</h2>
+        <p class="cap-sub">Personal Portfolio</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PROJECT 03 — MMS NGO ==================== -->
+  <section class="panel project-panel theme-mms" id="p-mms" data-index="03">
+    <div class="panel-inner">
+      <div class="cam" id="cam-mms">
+        <div class="device-wrap glass-device">
+          <div class="glass-frame">
+            <div class="screen-surface">
+              <div class="ui-glow"></div>
+              <div class="ui-screen">
+                <div class="ui-nav"><span class="ui-brand">MMS.ORG</span><div class="ui-dot-row"><span></span><span></span><span></span></div></div>
+                <div class="ui-bar accent" style="width:44%;"></div>
+                <div class="ui-grid ui-cols-3"><div class="ui-card tall"></div><div class="ui-card tall"></div><div class="ui-card tall"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="frag ui-frag frag-programs"><b>Programs</b>12 active</div>
+          <div class="frag ui-frag frag-volunteers"><b>Volunteers</b>340+</div>
+          <div class="frag ui-frag frag-impact"><b>Impact</b>Reports</div>
+          <div class="node-cluster" id="nodeCluster-mms">
+            <span class="node-dot"></span><span class="node-dot"></span><span class="node-dot"></span>
+            <span class="node-dot"></span><span class="node-dot"></span>
           </div>
         </div>
       </div>
-      <div class="hero-obj obj-browser" data-depth="0.4">
-        <div class="device browser-mini">
-          <div class="browser-bar"><span></span><span></span><span></span></div>
-          <div class="browser-body">
-            <div class="mini-line"></div>
-            <div class="mini-line w70"></div>
-            <div class="mini-line w40"></div>
+      <div class="proj-caption">
+        <span class="cap-index">03</span>
+        <h2 class="cap-title">MAHILA MUKTI SANSTHA</h2>
+        <p class="cap-sub">Digital Platform</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PROJECT 04 — HRMS ==================== -->
+  <section class="panel project-panel theme-hrms" id="p-hrms" data-index="04">
+    <div class="panel-inner">
+      <div class="cam" id="cam-hrms">
+        <div class="device-wrap monitor-device">
+          <div class="mockup-monitor">
+            <div class="screen-surface">
+              <div class="ui-glow"></div>
+              <div class="ui-screen">
+                <div class="ui-nav"><span class="ui-brand">HRMS</span><div class="ui-dot-row"><span></span><span></span><span></span></div></div>
+                <div class="ui-bar accent" style="width:34%;"></div>
+                <div class="ui-grid ui-cols-3"><div class="ui-card tall"></div><div class="ui-card tall"></div><div class="ui-card tall"></div></div>
+                <div class="ui-grid ui-cols-2"><div class="ui-card short"></div><div class="ui-card short"></div></div>
+              </div>
+            </div>
+            <div class="monitor-stand"></div><div class="monitor-base"></div>
           </div>
+          <div class="frag ui-frag fly-frag frag-employees"><b>Employees</b>128 active</div>
+          <div class="frag ui-frag fly-frag frag-attendance"><b>Attendance</b>97% today</div>
+          <div class="frag ui-frag fly-frag frag-leave"><b>Leave</b>6 pending</div>
+          <div class="frag ui-frag fly-frag frag-chart"><b>Statistics</b>Org-wide</div>
         </div>
       </div>
-      <div class="hero-obj obj-dashboard" data-depth="0.5">
-        <div class="device dashboard-mini">
-          <div class="dash-bars">
-            <span style="height:40%"></span><span style="height:80%"></span>
-            <span style="height:55%"></span><span style="height:95%"></span>
-            <span style="height:30%"></span>
+      <div class="proj-caption">
+        <span class="cap-index">04</span>
+        <h2 class="cap-title">HRMS</h2>
+        <p class="cap-sub">Human Resource Management</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PROJECT 05 — PMS ==================== -->
+  <section class="panel project-panel theme-pms" id="p-pms" data-index="05">
+    <div class="panel-inner">
+      <div class="cam" id="cam-pms">
+        <div class="device-wrap monitor-device">
+          <div class="mockup-monitor">
+            <div class="screen-surface">
+              <div class="ui-glow"></div>
+              <div class="ui-screen">
+                <div class="ui-nav"><span class="ui-brand">PMS</span><div class="ui-dot-row"><span></span><span></span><span></span></div></div>
+                <div class="ui-bar accent" style="width:50%;"></div>
+                <div class="timeline-row"><span></span><span></span><span></span><span></span><span></span></div>
+                <div class="ui-grid ui-cols-2"><div class="ui-card short"></div><div class="ui-card short"></div></div>
+              </div>
+            </div>
+            <div class="monitor-stand"></div><div class="monitor-base"></div>
           </div>
+          <div class="frag ui-frag depth-frag frag-projects"><b>Projects</b>14 running</div>
+          <div class="frag ui-frag depth-frag frag-team"><b>Field Team</b>22 members</div>
+          <div class="frag ui-frag depth-frag frag-progress"><b>Progress</b>On track</div>
         </div>
       </div>
-      <div class="hero-obj obj-node" data-depth="0.7">
-        <div class="device node-mini">
-          <div class="node-ring"></div>
-          <div class="node-core"></div>
-        </div>
-      </div>
-      <div class="hero-obj obj-code" data-depth="0.8">
-        <div class="device code-mini">
-          <span class="code-line">const build = () =&gt;</span>
-          <span class="code-line indent">deploy(idea);</span>
-        </div>
-      </div>
-      <div class="hero-obj obj-node2" data-depth="0.3">
-        <div class="device node-mini small">
-          <div class="node-ring"></div>
-          <div class="node-core"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="hero-content">
-      <p class="hero-kicker">Full-Stack Java Developer · Software Engineer · Product Builder</p>
-      <h1 class="hero-title">SADHYARSHI</h1>
-      <p class="hero-statement">I build digital products from idea to deployment.</p>
-      <a href="#projects" class="hero-cta" id="heroCta">
-        <span>Explore the work</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 4v16m0 0l-6-6m6 6l6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-
-    <div class="scroll-hint" aria-hidden="true">
-      <span></span>
-      <p>Scroll</p>
-    </div>
-  </section>
-
-  <!-- PROJECT SHOWCASE -->
-  <section class="showcase" id="projects">
-
-    <!-- Side navigation -->
-    <nav class="project-nav" id="projectNav" aria-label="Project navigation"></nav>
-
-    <!-- Stage -->
-    <div class="stage-wrap">
-      <div class="stage" id="stage" role="region" aria-label="Project showcase"></div>
-
-      <div class="stage-controls" aria-hidden="true">
-        <button class="stage-btn" id="prevBtn" aria-label="Previous project">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <div class="stage-count"><span id="stageCurrent">01</span> / <span id="stageTotal">07</span></div>
-        <button class="stage-btn" id="nextBtn" aria-label="Next project">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
+      <div class="proj-caption">
+        <span class="cap-index">05</span>
+        <h2 class="cap-title">PMS</h2>
+        <p class="cap-sub">Project Management</p>
       </div>
     </div>
   </section>
 
-  <!-- TECH STACK -->
-  <section class="tech" id="tech">
-    <h2 class="section-label">Tech Stack</h2>
-    <div class="tech-cloud" id="techCloud"></div>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="about" id="about">
-    <div class="about-inner">
-      <h2 class="about-headline">More than a developer.<br />A product builder.</h2>
-      <p class="about-text">I work across frontend, backend, mobile, databases and cloud infrastructure to turn ideas into complete working products.</p>
+  <!-- ==================== MAIN EVENT — OFFERX ==================== -->
+  <section class="panel project-panel offerx-panel theme-offerx" id="p-offerx" data-index="06">
+    <div class="panel-inner">
+      <div class="cam" id="cam-offerx">
+        <div class="device-wrap phone-device">
+          <div class="mockup-phone">
+            <div class="screen-surface">
+              <div class="ui-glow"></div>
+              <div class="ui-screen">
+                <div class="ui-nav"><span class="ui-brand">OFFERX</span><div class="ui-dot-row"><span></span><span></span><span></span></div></div>
+                <div class="ui-bar accent" style="width:40%;"></div>
+                <div class="ui-grid ui-cols-3"><div class="ui-card tall"></div><div class="ui-card tall"></div><div class="ui-card tall"></div></div>
+                <div class="ui-grid ui-cols-2"><div class="ui-card short"></div><div class="ui-card short"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="frag ui-frag offerx-frag side-left"><b>BUY</b>2,400 listings</div>
+          <div class="frag ui-frag offerx-frag side-right"><b>SELL</b>Post free</div>
+          <div class="frag ui-frag offerx-frag card-1"><b>Offers</b>Live deals</div>
+          <div class="frag ui-frag offerx-frag card-2"><b>Categories</b>Browse all</div>
+          <div class="frag ui-frag offerx-frag card-3"><b>Product</b>Details</div>
+        </div>
+      </div>
+      <div class="proj-caption offerx-caption">
+        <span class="cap-index">06</span>
+        <h2 class="cap-title">OFFERX</h2>
+        <p class="cap-sub cap-sub-big">A MARKETPLACE<br/>BUILT FOR MOBILE.</p>
+      </div>
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section class="contact" id="contact">
-    <div class="contact-inner">
-      <h2 class="contact-headline">Have an idea worth building?</h2>
-      <p class="contact-sub">Let's build it.</p>
+  <!-- ==================== OFFERX ADMIN ==================== -->
+  <section class="panel project-panel theme-admin" id="p-admin" data-index="07">
+    <div class="panel-inner">
+      <div class="cam" id="cam-admin">
+        <div class="device-wrap monitor-device">
+          <div class="mockup-monitor">
+            <div class="screen-surface">
+              <div class="ui-glow"></div>
+              <div class="ui-screen">
+                <div class="ui-nav"><span class="ui-brand">OFFERX / ADMIN</span><div class="ui-dot-row"><span></span><span></span><span></span></div></div>
+                <div class="ui-bar accent" style="width:46%;"></div>
+                <div class="ui-grid ui-cols-3"><div class="ui-card tall"></div><div class="ui-card tall"></div><div class="ui-card tall"></div></div>
+                <div class="ui-grid ui-cols-2"><div class="ui-card short"></div><div class="ui-card short"></div></div>
+              </div>
+            </div>
+            <div class="monitor-stand"></div><div class="monitor-base"></div>
+          </div>
+          <div class="frag ui-frag unfold-frag frag-users"><b>Users</b>18,200</div>
+          <div class="frag ui-frag unfold-frag frag-approvals"><b>Approvals</b>32 queued</div>
+          <div class="frag ui-frag unfold-frag frag-analytics"><b>Analytics</b>Realtime</div>
+        </div>
+      </div>
+      <div class="proj-caption">
+        <span class="cap-index">07</span>
+        <h2 class="cap-title">OFFERX ADMIN</h2>
+        <p class="cap-sub">The system behind the marketplace.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ARCHITECTURE / STACK ==================== -->
+  <section class="panel arch-panel" id="architecture">
+    <div class="panel-inner">
+      <div class="cam" id="cam-arch">
+        <svg class="arch-lines" id="archLines" viewBox="0 0 1000 600" preserveAspectRatio="none">
+          <line x1="500" y1="60" x2="500" y2="540" class="arch-line" />
+        </svg>
+        <div class="arch-node" id="archNode-milimeter" style="top:14%; left:20%;">Milimeter</div>
+        <div class="arch-node" id="archNode-amritanshu" style="top:10%; left:70%;">Amritanshu</div>
+        <div class="arch-node" id="archNode-mms" style="top:40%; left:12%;">MMS</div>
+        <div class="arch-node" id="archNode-hrms" style="top:36%; left:78%;">HRMS</div>
+        <div class="arch-node" id="archNode-pms" style="top:66%; left:22%;">PMS</div>
+        <div class="arch-node" id="archNode-offerx" style="top:62%; left:74%;">OfferX</div>
+
+        <div class="arch-flow" id="archFlow">
+          <span>FRONTEND</span><span>API</span><span>BACKEND</span><span>DATABASE</span><span>CLOUD</span><span>PRODUCTION</span>
+        </div>
+
+        <div class="tech-cloud" id="techCloud"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ABOUT ==================== -->
+  <section class="panel about-panel" id="about">
+    <div class="panel-inner about-inner">
+      <p class="about-line about-line-1">I DON'T JUST WRITE CODE.</p>
+      <p class="about-line about-line-2">I BUILD PRODUCTS.</p>
+      <p class="about-line about-line-3">From interfaces<br/>to APIs,<br/>from databases<br/>to deployment.</p>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT ==================== -->
+  <section class="panel contact-panel" id="contact">
+    <div class="panel-inner contact-inner">
+      <div class="contact-point" id="contactPoint"></div>
+      <h2 class="contact-headline">HAVE AN IDEA<br/>WORTH BUILDING?</h2>
+      <p class="contact-sub">LET'S BUILD IT.</p>
       <div class="contact-links">
-        <a href="mailto:sadhyarshii@gmail.com" class="contact-link">
-          <span>Email</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="https://github.com/" target="_blank" rel="noopener" class="contact-link">
-          <span>GitHub</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="https://linkedin.com/" target="_blank" rel="noopener" class="contact-link">
-          <span>LinkedIn</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+        <a href="mailto:sadhyarshii@gmail.com" class="contact-link"><span>Email</span></a>
+        <a href="https://github.com/" target="_blank" rel="noopener" class="contact-link"><span>GitHub</span></a>
+        <a href="https://linkedin.com/" target="_blank" rel="noopener" class="contact-link"><span>LinkedIn</span></a>
       </div>
+      <footer class="footer">
+        <p>SADHYARSHI</p>
+        <p>FULL-STACK DEVELOPER · SOFTWARE ENGINEER</p>
+        <p>&copy; <span id="year"></span></p>
+      </footer>
     </div>
-    <footer class="footer">
-      <p>&copy; <span id="year"></span> Sadhyarshi. Built from idea to deployment.</p>
-    </footer>
   </section>
 
-  <script src="script.js"></script>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
