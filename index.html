@@ -1,140 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sadhyarshi Sahastranshu | Coming Soon</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --bg: #0a0a0f;
-            --surface: #12121a;
-            --border: #ffffff12;
-            --accent: #6c63ff;
-            --accent2: #ff6584;
-            --text: #e2e2f0;
-            --muted: #7a7a9a;
-        }
-        * { box-sizing: border-box; }
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(100px);
-            pointer-events: none;
-        }
-        .orb-1 { width: 500px; height: 500px; background: rgba(108,99,255,0.15); top: -100px; left: -100px; }
-        .orb-2 { width: 400px; height: 400px; background: rgba(255,101,132,0.1); bottom: -80px; right: -80px; }
-
-        .content { position: relative; z-index: 1; padding: 2rem; }
-
-        .logo {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: 1.3rem;
-            color: #fff;
-            margin-bottom: 3rem;
-            letter-spacing: -0.5px;
-        }
-        .logo span { color: var(--accent); }
-
-        h1 {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            color: #fff;
-            letter-spacing: -1.5px;
-            margin: 0 0 1rem;
-            background: linear-gradient(135deg, #fff, var(--muted));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        p {
-            color: var(--muted);
-            font-size: 1.05rem;
-            max-width: 420px;
-            margin: 0 auto 2.5rem;
-            line-height: 1.7;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 99px;
-            padding: 6px 16px;
-            font-size: 0.82rem;
-            color: var(--muted);
-            margin-bottom: 2rem;
-        }
-        .hero-badge-dot {
-            width: 7px; height: 7px;
-            background: #4ade80;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        .contact-link {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 600;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 2px;
-            transition: border-color 0.2s, color 0.2s;
-        }
-        .contact-link:hover { color: var(--accent); border-color: var(--accent); }
-
-        footer {
-            position: absolute;
-            bottom: 1.5rem;
-            left: 0;
-            right: 0;
-            color: var(--muted);
-            font-size: 0.8rem;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Sadhyarshi — Full-Stack Java Developer &amp; Product Builder</title>
+<meta name="description" content="Sadhyarshi — I build digital products from idea to deployment. Full-stack Java developer, software engineer, product builder." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23050505%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%2300e0a4%22 font-family=%22monospace%22>S</text></svg>" />
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
 
-    <div class="content">
-        <div class="logo">SS<span>.</span></div>
-        <div class="hero-badge">
-            <span class="hero-badge-dot"></span>
-            Site under construction
+  <!-- Ambient canvas background -->
+  <canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+  <!-- Progress / section indicator -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- NAV -->
+  <header class="nav" id="siteNav">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">SADHYARSHI</a>
+      <nav class="nav-links">
+        <a href="#projects" data-nav="projects">Projects</a>
+        <a href="#about" data-nav="about">About</a>
+        <a href="#contact" data-nav="contact">Contact</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-scene" id="heroScene">
+      <div class="hero-obj obj-laptop" data-depth="0.6">
+        <div class="device laptop-mini">
+          <div class="laptop-mini-screen">
+            <div class="mini-row"></div>
+            <div class="mini-row short"></div>
+            <div class="mini-grid">
+              <span></span><span></span><span></span><span></span>
+            </div>
+          </div>
         </div>
-        <h1>Coming Soon</h1>
-        <p>I'm building something new. In the meantime, reach out at
-            <a href="mailto:hello@sadhyarshi.com" class="contact-link">hello@sadhyarshi.com</a>
-        </p>
+      </div>
+      <div class="hero-obj obj-phone" data-depth="0.9">
+        <div class="device phone-mini">
+          <div class="phone-mini-screen">
+            <div class="mini-pill"></div>
+            <div class="mini-card"></div>
+            <div class="mini-card"></div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-obj obj-browser" data-depth="0.4">
+        <div class="device browser-mini">
+          <div class="browser-bar"><span></span><span></span><span></span></div>
+          <div class="browser-body">
+            <div class="mini-line"></div>
+            <div class="mini-line w70"></div>
+            <div class="mini-line w40"></div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-obj obj-dashboard" data-depth="0.5">
+        <div class="device dashboard-mini">
+          <div class="dash-bars">
+            <span style="height:40%"></span><span style="height:80%"></span>
+            <span style="height:55%"></span><span style="height:95%"></span>
+            <span style="height:30%"></span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-obj obj-node" data-depth="0.7">
+        <div class="device node-mini">
+          <div class="node-ring"></div>
+          <div class="node-core"></div>
+        </div>
+      </div>
+      <div class="hero-obj obj-code" data-depth="0.8">
+        <div class="device code-mini">
+          <span class="code-line">const build = () =&gt;</span>
+          <span class="code-line indent">deploy(idea);</span>
+        </div>
+      </div>
+      <div class="hero-obj obj-node2" data-depth="0.3">
+        <div class="device node-mini small">
+          <div class="node-ring"></div>
+          <div class="node-core"></div>
+        </div>
+      </div>
     </div>
 
-    <footer>© 2026 Sadhyarshi Sahastranshu. All rights reserved.</footer>
+    <div class="hero-content">
+      <p class="hero-kicker">Full-Stack Java Developer · Software Engineer · Product Builder</p>
+      <h1 class="hero-title">SADHYARSHI</h1>
+      <p class="hero-statement">I build digital products from idea to deployment.</p>
+      <a href="#projects" class="hero-cta" id="heroCta">
+        <span>Explore the work</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 4v16m0 0l-6-6m6 6l6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">
+      <span></span>
+      <p>Scroll</p>
+    </div>
+  </section>
+
+  <!-- PROJECT SHOWCASE -->
+  <section class="showcase" id="projects">
+
+    <!-- Side navigation -->
+    <nav class="project-nav" id="projectNav" aria-label="Project navigation"></nav>
+
+    <!-- Stage -->
+    <div class="stage-wrap">
+      <div class="stage" id="stage" role="region" aria-label="Project showcase"></div>
+
+      <div class="stage-controls" aria-hidden="true">
+        <button class="stage-btn" id="prevBtn" aria-label="Previous project">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="stage-count"><span id="stageCurrent">01</span> / <span id="stageTotal">07</span></div>
+        <button class="stage-btn" id="nextBtn" aria-label="Next project">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH STACK -->
+  <section class="tech" id="tech">
+    <h2 class="section-label">Tech Stack</h2>
+    <div class="tech-cloud" id="techCloud"></div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-inner">
+      <h2 class="about-headline">More than a developer.<br />A product builder.</h2>
+      <p class="about-text">I work across frontend, backend, mobile, databases and cloud infrastructure to turn ideas into complete working products.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <h2 class="contact-headline">Have an idea worth building?</h2>
+      <p class="contact-sub">Let's build it.</p>
+      <div class="contact-links">
+        <a href="mailto:sadhyarshii@gmail.com" class="contact-link">
+          <span>Email</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="https://github.com/" target="_blank" rel="noopener" class="contact-link">
+          <span>GitHub</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="https://linkedin.com/" target="_blank" rel="noopener" class="contact-link">
+          <span>LinkedIn</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <footer class="footer">
+      <p>&copy; <span id="year"></span> Sadhyarshi. Built from idea to deployment.</p>
+    </footer>
+  </section>
+
+  <script src="script.js"></script>
 </body>
 </html>
