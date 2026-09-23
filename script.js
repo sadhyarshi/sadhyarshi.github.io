@@ -1,58 +1,89 @@
 /* ============================================================
-   SADHYARSHI — Portfolio interactions
-   Vanilla JS. No dependencies.
+   SADHYARSHI — Cinematic Portfolio
+   GSAP + ScrollTrigger driven. No build step.
    ============================================================ */
 (function () {
   'use strict';
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var isTouch = window.matchMedia('(pointer: coarse)').matches;
-  var isMobile = window.innerWidth <= 640;
+  var isDesktop = window.matchMedia('(min-width: 901px)').matches && !reduceMotion;
+
+  var gsapReady = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+  if (gsapReady) {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
+  document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());
 
   /* ---------------------------------------------------------
-     Year
+     LOADER
   --------------------------------------------------------- */
-  var yearEl = document.getElementById('year');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+  var loaderDone = false;
+  (function loader() {
+    var loaderEl = document.getElementById('loader');
+    var bar = document.getElementById('loaderBar');
+    var pct = document.getElementById('loaderPct');
+    if (!loaderEl) { loaderDone = true; return; }
+
+    document.documentElement.classList.add('no-scroll-lock');
+    document.documentElement.style.overflow = 'hidden';
+
+    var progress = 0;
+    var duration = reduceMotion ? 400 : 1400;
+    var start = performance.now();
+
+    function tick(now) {
+      var elapsed = now - start;
+      progress = Math.min(100, Math.round((elapsed / duration) * 100));
+      if (bar) bar.style.width = progress + '%';
+      if (pct) pct.textContent = progress;
+      if (progress < 100) {
+        requestAnimationFrame(tick);
+      } else {
+        finish();
+      }
+    }
+    requestAnimationFrame(tick);
+
+    function finish() {
+      loaderEl.classList.add('done');
+      document.documentElement.style.overflow = '';
+      loaderDone = true;
+      setTimeout(function () {
+        loaderEl.style.display = 'none';
+        playHeroIntro();
+        if (gsapReady) ScrollTrigger.refresh();
+      }, 820);
+    }
+  })();
 
   /* ---------------------------------------------------------
-     Custom cursor
+     CUSTOM CURSOR
   --------------------------------------------------------- */
   (function cursor() {
     if (isTouch) return;
-    var cursorEl = document.getElementById('cursor');
-    var dotEl = document.getElementById('cursorDot');
-    if (!cursorEl || !dotEl) return;
+    var el = document.getElementById('cursor');
+    if (!el) return;
+    var mx = window.innerWidth / 2, my = window.innerHeight / 2, cx = mx, cy = my;
 
-    var mx = window.innerWidth / 2, my = window.innerHeight / 2;
-    var cx = mx, cy = my;
-
-    window.addEventListener('mousemove', function (e) {
-      mx = e.clientX; my = e.clientY;
-      dotEl.style.left = mx + 'px';
-      dotEl.style.top = my + 'px';
-    }, { passive: true });
+    window.addEventListener('mousemove', function (e) { mx = e.clientX; my = e.clientY; }, { passive: true });
 
     function raf() {
-      cx += (mx - cx) * 0.18;
-      cy += (my - cy) * 0.18;
-      cursorEl.style.left = cx + 'px';
-      cursorEl.style.top = cy + 'px';
+      cx += (mx - cx) * 0.22;
+      cy += (my - cy) * 0.22;
+      el.style.transform = 'translate(' + (cx - 4) + 'px,' + (cy - 4) + 'px)';
       requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
 
-    var hoverSelector = 'a, button, .project-nav-item, .tech-chip, .stage-btn, .scene-link';
-    document.addEventListener('mouseover', function (e) {
-      if (e.target.closest(hoverSelector)) cursorEl.classList.add('hover');
-    });
-    document.addEventListener('mouseout', function (e) {
-      if (e.target.closest(hoverSelector)) cursorEl.classList.remove('hover');
-    });
+    var hoverSel = 'a, .side-nav-dot, .contact-link, .footer';
+    document.addEventListener('mouseover', function (e) { if (e.target.closest(hoverSel)) el.classList.add('hover'); });
+    document.addEventListener('mouseout', function (e) { if (e.target.closest(hoverSel)) el.classList.remove('hover'); });
   })();
 
   /* ---------------------------------------------------------
-     Ambient background canvas (particles + faint grid)
+     AMBIENT PARTICLE + GRID BACKGROUND
   --------------------------------------------------------- */
   (function bg() {
     var canvas = document.getElementById('bgCanvas');
@@ -61,48 +92,28 @@
     var w, h, dpr = Math.min(window.devicePixelRatio || 1, 2);
     var particles = [];
     var running = true;
-
-    var count = isMobile ? 28 : 70;
+    var count = isDesktop ? 60 : 22;
 
     function resize() {
-      w = window.innerWidth;
-      h = window.innerHeight;
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      canvas.style.width = w + 'px';
-      canvas.style.height = h + 'px';
+      w = window.innerWidth; h = window.innerHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
-
     function init() {
       particles = [];
       for (var i = 0; i < count; i++) {
         particles.push({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          r: Math.random() * 1.4 + 0.3,
-          vx: (Math.random() - 0.5) * 0.08,
-          vy: (Math.random() - 0.5) * 0.08,
-          a: Math.random() * 0.5 + 0.15
+          x: Math.random() * w, y: Math.random() * h,
+          r: Math.random() * 1.3 + 0.3,
+          vx: (Math.random() - 0.5) * 0.06, vy: (Math.random() - 0.5) * 0.06,
+          a: Math.random() * 0.4 + 0.12
         });
       }
     }
-
     function draw() {
       if (!running) return;
       ctx.clearRect(0, 0, w, h);
-
-      // faint grid
-      ctx.strokeStyle = 'rgba(255,255,255,0.02)';
-      ctx.lineWidth = 1;
-      var gap = 90;
-      for (var gx = 0; gx < w; gx += gap) {
-        ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke();
-      }
-      for (var gy = 0; gy < h; gy += gap) {
-        ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke();
-      }
-
       for (var i = 0; i < particles.length; i++) {
         var p = particles[i];
         p.x += p.vx; p.y += p.vy;
@@ -115,15 +126,8 @@
       }
       if (!reduceMotion) requestAnimationFrame(draw);
     }
-
-    resize();
-    init();
-    draw();
-
-    window.addEventListener('resize', function () {
-      resize(); init();
-    });
-
+    resize(); init(); draw();
+    window.addEventListener('resize', function () { resize(); init(); });
     document.addEventListener('visibilitychange', function () {
       running = !document.hidden;
       if (running && !reduceMotion) requestAnimationFrame(draw);
@@ -131,414 +135,421 @@
   })();
 
   /* ---------------------------------------------------------
-     Nav: glassmorphism on scroll + active link + progress bar
+     SCROLL PROGRESS + BRAND MARK
   --------------------------------------------------------- */
-  (function nav() {
-    var navEl = document.getElementById('siteNav');
-    var progress = document.getElementById('scrollProgress');
-    var links = document.querySelectorAll('.nav-links a');
-    var sections = ['projects', 'about', 'contact'].map(function (id) {
-      return document.getElementById(id);
-    });
-
+  (function progressBar() {
+    var bar = document.getElementById('scrollProgress');
+    var brand = document.getElementById('brandMark');
+    var hero = document.getElementById('hero');
     function onScroll() {
-      var y = window.scrollY;
-      if (navEl) navEl.classList.toggle('scrolled', y > 40);
-
       var docH = document.documentElement.scrollHeight - window.innerHeight;
-      if (progress) progress.style.width = docH > 0 ? Math.min(100, (y / docH) * 100) + '%' : '0%';
-
-      var activeIdx = -1;
-      sections.forEach(function (sec, i) {
-        if (!sec) return;
-        var rect = sec.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.5 && rect.bottom > window.innerHeight * 0.2) {
-          activeIdx = i;
-        }
-      });
-      links.forEach(function (l, i) { l.classList.toggle('active', i === activeIdx); });
+      var y = window.scrollY;
+      if (bar) bar.style.width = (docH > 0 ? Math.min(100, (y / docH) * 100) : 0) + '%';
+      if (brand && hero) {
+        var heroBottom = hero.getBoundingClientRect().bottom;
+        brand.classList.toggle('visible', heroBottom < 0);
+      }
     }
-
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
   })();
 
   /* ---------------------------------------------------------
-     Hero: parallax on mouse move
+     SIDE NAV — dots + smooth scroll + active tracking
   --------------------------------------------------------- */
-  (function heroParallax() {
-    if (isTouch || reduceMotion) return;
-    var scene = document.getElementById('heroScene');
-    var hero = document.getElementById('hero');
-    if (!scene || !hero) return;
-    var objs = scene.querySelectorAll('.hero-obj');
+  (function sideNav() {
+    var dots = document.querySelectorAll('.side-nav-dot');
+    if (!dots.length) return;
 
-    var tx = 0, ty = 0, cx2 = 0, cy2 = 0;
-    hero.addEventListener('mousemove', function (e) {
-      var rect = hero.getBoundingClientRect();
-      tx = (e.clientX - rect.left) / rect.width - 0.5;
-      ty = (e.clientY - rect.top) / rect.height - 0.5;
-    });
-
-    function raf() {
-      cx2 += (tx - cx2) * 0.05;
-      cy2 += (ty - cy2) * 0.05;
-      objs.forEach(function (o) {
-        var depth = parseFloat(o.getAttribute('data-depth')) || 0.5;
-        var moveX = cx2 * 40 * depth;
-        var moveY = cy2 * 40 * depth;
-        o.style.transform = 'translate3d(' + moveX + 'px,' + moveY + 'px,0)';
+    dots.forEach(function (dot) {
+      dot.addEventListener('click', function () {
+        var target = document.getElementById(dot.getAttribute('data-target'));
+        if (!target) return;
+        var top = target.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top: top, behavior: reduceMotion ? 'auto' : 'smooth' });
       });
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-  })();
-
-  /* ---------------------------------------------------------
-     Project data
-  --------------------------------------------------------- */
-  var projects = [
-    {
-      id: 'milimeter',
-      theme: 'theme-milimeter',
-      device: 'laptop',
-      title: 'Milimeter.co',
-      role: 'E-commerce · Shopify',
-      tags: ['Shopify', 'E-commerce', 'Liquid', 'Storefront'],
-      link: '#',
-      brand: 'MILIMETER',
-      cards: [
-        { title: 'Cart', sub: '3 items' },
-        { title: 'New Drop', sub: 'Live now' },
-        { title: 'Checkout', sub: 'Secure' }
-      ]
-    },
-    {
-      id: 'amritanshu',
-      theme: 'theme-amritanshu',
-      device: 'browser',
-      title: 'AmritanshuPrajwal.com',
-      role: 'Personal Portfolio · Ceramicist & Photographer',
-      tags: ['React', 'Vite', 'Editorial UI'],
-      link: '#',
-      brand: 'AMRITANSHU',
-      cards: [
-        { title: 'Gallery', sub: 'Ceramics' },
-        { title: 'Milimeter', sub: 'Founder' },
-        { title: 'Journal', sub: 'Latest' }
-      ]
-    },
-    {
-      id: 'ngo',
-      theme: 'theme-ngo',
-      device: 'laptop',
-      title: 'Mahila Mukti Sanstha',
-      role: 'NGO Website · Community Platform',
-      tags: ['Organization', 'Outreach', 'Web'],
-      link: '#',
-      brand: 'MMS.ORG',
-      cards: [
-        { title: 'Programs', sub: '12 active' },
-        { title: 'Volunteers', sub: '340+' },
-        { title: 'Impact', sub: 'Reports' }
-      ]
-    },
-    {
-      id: 'hrms',
-      theme: 'theme-hrms',
-      device: 'monitor',
-      title: 'HRMS',
-      role: 'hrms.mahilamuktisanstha.com',
-      tags: ['Java', 'Spring Boot', 'HRMS', 'Dashboard'],
-      link: '#',
-      brand: 'HRMS',
-      cards: [
-        { title: 'Employees', sub: '128 active' },
-        { title: 'Attendance', sub: '97% today' },
-        { title: 'Leave', sub: '6 pending' }
-      ]
-    },
-    {
-      id: 'pms',
-      theme: 'theme-pms',
-      device: 'monitor',
-      title: 'PMS',
-      role: 'pms.mahilamuktisanstha.com',
-      tags: ['Java', 'Spring Boot', 'Project Monitoring'],
-      link: '#',
-      brand: 'PMS',
-      cards: [
-        { title: 'Projects', sub: '14 running' },
-        { title: 'Timelines', sub: 'On track' },
-        { title: 'Field Team', sub: '22 members' }
-      ]
-    },
-    {
-      id: 'offerx',
-      theme: 'theme-offerx',
-      device: 'phone',
-      title: 'OfferX',
-      role: 'Marketplace Mobile Application',
-      tags: ['React Native', 'Java', 'API', 'Marketplace'],
-      link: '#',
-      brand: 'OFFERX',
-      cards: [
-        { title: 'Buy', sub: '2,400 listings' },
-        { title: 'Sell', sub: 'Post free' },
-        { title: 'Offers', sub: 'Live deals' }
-      ]
-    },
-    {
-      id: 'offerx-admin',
-      theme: 'theme-admin',
-      device: 'monitor',
-      title: 'OfferX Admin Panel',
-      role: 'Marketplace Administration & Analytics',
-      tags: ['Java', 'Spring Boot', 'Analytics', 'Moderation'],
-      link: '#',
-      brand: 'OFFERX / ADMIN',
-      cards: [
-        { title: 'Users', sub: '18,200' },
-        { title: 'Approvals', sub: '32 queued' },
-        { title: 'Analytics', sub: 'Realtime' }
-      ]
-    }
-  ];
-
-  /* ---------------------------------------------------------
-     Device markup builders
-  --------------------------------------------------------- */
-  function screenContentHTML(p) {
-    return '' +
-      '<div class="ui-glow"></div>' +
-      '<div class="ui-screen">' +
-        '<div class="ui-nav"><span class="ui-brand">' + p.brand + '</span><div class="ui-dot-row"><span></span><span></span><span></span></div></div>' +
-        '<div class="ui-bar accent" style="width:40%;margin-bottom:10px;"></div>' +
-        '<div class="ui-grid ui-cols-3" style="margin-bottom:8px;">' +
-          '<div class="ui-card tall"></div><div class="ui-card tall"></div><div class="ui-card tall"></div>' +
-        '</div>' +
-        '<div class="ui-grid ui-cols-2">' +
-          '<div class="ui-card short"></div><div class="ui-card short"></div>' +
-        '</div>' +
-        '<div class="ui-badge" style="margin-top:10px;">' + (p.tags[0] || '') + '</div>' +
-      '</div>';
-  }
-
-  function orbitCardsHTML(p) {
-    if (isMobile) return '';
-    var classes = ['c1', 'c2', 'c3'];
-    return p.cards.map(function (c, i) {
-      return '<div class="orbit-card ' + classes[i] + '"><b>' + c.title + '</b>' + c.sub + '</div>';
-    }).join('');
-  }
-
-  function deviceHTML(p) {
-    if (p.device === 'phone') {
-      return '' +
-        '<div class="device-phone ' + p.theme + '">' +
-          '<div class="phone-frame"><div class="phone-screen">' + screenContentHTML(p) + '</div></div>' +
-          orbitCardsHTML(p) +
-        '</div>';
-    }
-    if (p.device === 'browser') {
-      return '' +
-        '<div class="device-monitor ' + p.theme + '" style="width:min(96%,520px);">' +
-          '<div class="monitor-frame">' +
-            '<div class="monitor-screen"><div class="ui-nav" style="position:absolute;top:0;left:0;right:0;padding:8px 12px;background:rgba(255,255,255,0.03);z-index:2;">' +
-              '<div class="ui-dot-row"><span></span><span></span><span></span></div><span class="ui-brand"></span></div>' +
-              screenContentHTML(p) +
-            '</div>' +
-          '</div>' +
-          '<div class="monitor-stand"></div><div class="monitor-base"></div>' +
-          orbitCardsHTML(p) +
-        '</div>';
-    }
-    if (p.device === 'monitor') {
-      return '' +
-        '<div class="device-monitor ' + p.theme + '">' +
-          '<div class="monitor-frame">' +
-            '<div class="monitor-screen">' + screenContentHTML(p) + '</div>' +
-          '</div>' +
-          '<div class="monitor-stand"></div><div class="monitor-base"></div>' +
-          orbitCardsHTML(p) +
-        '</div>';
-    }
-    // laptop (default)
-    return '' +
-      '<div class="device-laptop ' + p.theme + '">' +
-        '<div class="laptop-lid"><div class="laptop-screen">' + screenContentHTML(p) + '</div></div>' +
-        '<div class="laptop-base"></div>' +
-        orbitCardsHTML(p) +
-      '</div>';
-  }
-
-  function sceneHTML(p, index) {
-    return '' +
-      '<div class="scene-visual">' + deviceHTML(p) + '</div>' +
-      '<div class="scene-info">' +
-        '<span class="scene-index">' + String(index + 1).padStart(2, '0') + '</span>' +
-        '<h3 class="scene-title">' + p.title + '</h3>' +
-        '<p class="scene-role">' + p.role + '</p>' +
-        '<div class="scene-tags">' + p.tags.map(function (t) { return '<span class="scene-tag">' + t + '</span>'; }).join('') + '</div>' +
-        '<a href="' + p.link + '" class="scene-link" target="_blank" rel="noopener"><span>View Project</span> →</a>' +
-      '</div>';
-  }
-
-  /* ---------------------------------------------------------
-     Stage controller
-  --------------------------------------------------------- */
-  (function stageController() {
-    var stage = document.getElementById('stage');
-    var projectNav = document.getElementById('projectNav');
-    var stageCurrent = document.getElementById('stageCurrent');
-    var stageTotal = document.getElementById('stageTotal');
-    var prevBtn = document.getElementById('prevBtn');
-    var nextBtn = document.getElementById('nextBtn');
-    var showcase = document.querySelector('.showcase');
-    if (!stage) return;
-
-    var current = 0;
-    var animating = false;
-    var total = projects.length;
-    if (stageTotal) stageTotal.textContent = String(total).padStart(2, '0');
-
-    // Build side nav
-    projects.forEach(function (p, i) {
-      var item = document.createElement('div');
-      item.className = 'project-nav-item' + (i === 0 ? ' active' : '');
-      item.setAttribute('data-index', i);
-      item.innerHTML = '<span class="num">' + String(i + 1).padStart(2, '0') + '</span><span class="bar"></span><span class="label">' + p.title.split('.')[0].toUpperCase() + '</span>';
-      item.addEventListener('click', function () { goTo(i); });
-      projectNav.appendChild(item);
     });
 
-    function renderInitial() {
-      var scene = document.createElement('div');
-      scene.className = 'scene active';
-      scene.innerHTML = sceneHTML(projects[0], 0);
-      stage.appendChild(scene);
-    }
-    renderInitial();
-
-    function updateSideNav() {
-      var items = projectNav.querySelectorAll('.project-nav-item');
-      items.forEach(function (it, i) { it.classList.toggle('active', i === current); });
-    }
-
-    function goTo(index, dir) {
-      if (animating || index === current || index < 0 || index >= total) return;
-      animating = true;
-      dir = dir || (index > current ? 'next' : 'prev');
-
-      var oldScene = stage.querySelector('.scene');
-      var newScene = document.createElement('div');
-      newScene.className = 'scene ' + (dir === 'next' ? 'enter-next' : 'enter-prev');
-      newScene.innerHTML = sceneHTML(projects[index], index);
-      stage.appendChild(newScene);
-
-      // force reflow
-      void newScene.offsetWidth;
-
-      requestAnimationFrame(function () {
-        if (oldScene) {
-          oldScene.classList.remove('active');
-          oldScene.classList.add(dir === 'next' ? 'leave-next' : 'leave-prev');
+    if (!gsapReady) return;
+    dots.forEach(function (dot) {
+      var target = document.getElementById(dot.getAttribute('data-target'));
+      if (!target) return;
+      ScrollTrigger.create({
+        trigger: target,
+        start: 'top center',
+        end: 'bottom center',
+        onToggle: function (self) {
+          if (self.isActive) {
+            dots.forEach(function (d) { d.classList.remove('active'); });
+            dot.classList.add('active');
+          }
         }
-        newScene.classList.remove('enter-next', 'enter-prev');
-        newScene.classList.add('active');
+      });
+    });
+  })();
+
+  /* ---------------------------------------------------------
+     SUBTLE MOUSE PARALLAX ON PANEL-INNER (camera tilt)
+  --------------------------------------------------------- */
+  (function mouseParallax() {
+    if (isTouch || reduceMotion || !gsapReady) return;
+    var inners = document.querySelectorAll('.panel-inner');
+    var quickFns = [];
+    inners.forEach(function (el) {
+      quickFns.push({
+        el: el,
+        rx: gsap.quickTo(el, 'rotationX', { duration: 0.6, ease: 'power2.out' }),
+        ry: gsap.quickTo(el, 'rotationY', { duration: 0.6, ease: 'power2.out' })
+      });
+    });
+    window.addEventListener('mousemove', function (e) {
+      var nx = (e.clientX / window.innerWidth) - 0.5;
+      var ny = (e.clientY / window.innerHeight) - 0.5;
+      quickFns.forEach(function (q) {
+        q.ry(nx * 4);
+        q.rx(-ny * 4);
+      });
+    }, { passive: true });
+  })();
+
+  /* ---------------------------------------------------------
+     HERO INTRO (autoplay once loader finishes)
+  --------------------------------------------------------- */
+  function playHeroIntro() {
+    if (!gsapReady) return;
+    var frags = document.querySelectorAll('#heroCam .world-frag');
+    var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    tl.to('#heroLine1', { opacity: 0.85, duration: 0.9 }, 0.1)
+      .to('.hero-line2 .lw', { opacity: 1, y: 0, duration: 1, stagger: 0.18 }, 0.5)
+      .to(frags, { opacity: 0.85, duration: 1.2, stagger: 0.09 }, 0.4)
+      .to('.scroll-hint', { opacity: 0.7, duration: 0.8 }, 1.6);
+
+    // gentle continuous float for hero fragments
+    if (!reduceMotion) {
+      frags.forEach(function (f, i) {
+        gsap.to(f, {
+          y: '+=' + (12 + (i % 3) * 6),
+          duration: 4 + (i % 4),
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+          delay: i * 0.2
+        });
+      });
+    }
+  }
+
+  /* ---------------------------------------------------------
+     HERO — scroll-driven exit (camera moves forward through scene)
+  --------------------------------------------------------- */
+  if (gsapReady && isDesktop) {
+    gsap.timeline({
+      scrollTrigger: { trigger: '#hero', start: 'top top', end: '+=100%', scrub: 1, pin: true, anticipatePin: 1 }
+    })
+      .to('.hero-text', { opacity: 0, z: 300, scale: 1.3, duration: 1, ease: 'none' }, 0)
+      .to('#heroCam .world-frag', { z: 600, opacity: 0, stagger: 0.03, duration: 1, ease: 'none' }, 0.1)
+      .to('.scroll-hint', { opacity: 0, duration: 0.3, ease: 'none' }, 0);
+  } else if (gsapReady) {
+    // mobile / reduced-motion: simple fade only, no pin
+    ScrollTrigger.create({
+      trigger: '#hero', start: 'bottom bottom', end: 'bottom top', scrub: false,
+      onEnter: function () { gsap.to('.hero-text', { opacity: 0, duration: 0.4 }); }
+    });
+  }
+
+  /* ---------------------------------------------------------
+     GENERIC PROJECT SCENE BUILDER
+  --------------------------------------------------------- */
+  function buildScene(panelSelector, opts) {
+    opts = opts || {};
+    var panel = document.querySelector(panelSelector);
+    if (!panel || !gsapReady) return;
+
+    var deviceWrap = panel.querySelector('.device-wrap');
+    var frags = panel.querySelectorAll('.ui-frag');
+    var capIndex = panel.querySelector('.cap-index');
+    var capTitle = panel.querySelector('.cap-title');
+    var capSub = panel.querySelector('.cap-sub');
+    var extra = opts.extraNodes ? panel.querySelectorAll(opts.extraNodes) : null;
+
+    if (isDesktop) {
+      var tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: panel,
+          start: 'top top',
+          end: '+=' + (opts.scrollLength || 170) + '%',
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1
+        }
       });
 
-      var cleanupDelay = reduceMotion ? 50 : 900;
-      setTimeout(function () {
-        if (oldScene && oldScene.parentNode) oldScene.parentNode.removeChild(oldScene);
-        animating = false;
-      }, cleanupDelay);
+      var enterRotY = opts.enterRotY != null ? opts.enterRotY : -22;
+      var exitRotY = opts.exitRotY != null ? opts.exitRotY : 22;
+      var enterRotX = opts.enterRotX || 0;
 
-      current = index;
-      if (stageCurrent) stageCurrent.textContent = String(current + 1).padStart(2, '0');
-      updateSideNav();
-    }
+      tl.fromTo(deviceWrap,
+        { opacity: 0, scale: 0.05, z: -1500, rotationY: enterRotY, rotationX: enterRotX },
+        { opacity: 1, scale: 1, z: 0, rotationY: 0, rotationX: 0, duration: 1.3, ease: 'none' }, 0);
 
-    if (prevBtn) prevBtn.addEventListener('click', function () { goTo(current - 1, 'prev'); });
-    if (nextBtn) nextBtn.addEventListener('click', function () { goTo(current + 1, 'next'); });
-
-    /* Show side nav only while showcase section is in view */
-    function checkVisible() {
-      if (!showcase) return;
-      var rect = showcase.getBoundingClientRect();
-      var visible = rect.top < window.innerHeight * 0.6 && rect.bottom > window.innerHeight * 0.4;
-      projectNav.classList.toggle('visible', visible);
-      return visible;
-    }
-    window.addEventListener('scroll', checkVisible, { passive: true });
-    checkVisible();
-
-    /* Keyboard navigation */
-    document.addEventListener('keydown', function (e) {
-      if (!checkVisible()) return;
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); goTo(Math.min(current + 1, total - 1), 'next'); }
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(Math.max(current - 1, 0), 'prev'); }
-    });
-
-    /* Wheel navigation within the showcase (throttled) */
-    var wheelLock = false;
-    showcase && showcase.addEventListener('wheel', function (e) {
-      if (!checkVisible()) return;
-      // allow normal page scroll to move between major sections at the edges
-      if ((current === 0 && e.deltaY < 0) || (current === total - 1 && e.deltaY > 0)) return;
-      e.preventDefault();
-      if (wheelLock) return;
-      wheelLock = true;
-      if (e.deltaY > 12) goTo(Math.min(current + 1, total - 1), 'next');
-      else if (e.deltaY < -12) goTo(Math.max(current - 1, 0), 'prev');
-      setTimeout(function () { wheelLock = false; }, 700);
-    }, { passive: false });
-
-    /* Touch swipe */
-    var touchStartX = 0, touchStartY = 0;
-    stage.addEventListener('touchstart', function (e) {
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-    }, { passive: true });
-    stage.addEventListener('touchend', function (e) {
-      var dx = e.changedTouches[0].clientX - touchStartX;
-      var dy = e.changedTouches[0].clientY - touchStartY;
-      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
-        if (dx < 0) goTo(Math.min(current + 1, total - 1), 'next');
-        else goTo(Math.max(current - 1, 0), 'prev');
+      if (extra) {
+        tl.fromTo(extra, { opacity: 0 }, { opacity: 0.9, duration: 0.8, stagger: 0.1, ease: 'none' }, 1.0);
       }
-    }, { passive: true });
+
+      if (frags.length) {
+        tl.fromTo(frags, { opacity: 0, scale: 0.75 },
+          { opacity: 1, scale: 1, stagger: 0.08, duration: 0.7, ease: 'none' }, 1.1);
+      }
+
+      if (capIndex) tl.fromTo(capIndex, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6, ease: 'none' }, 1.3);
+      if (capTitle) tl.fromTo(capTitle, { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.7, ease: 'none' }, 1.4);
+      if (capSub) tl.fromTo(capSub, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6, ease: 'none' }, 1.55);
+
+      // hold
+      var holdEnd = 2.6;
+
+      // exit
+      if (capIndex) tl.to(capIndex, { opacity: 0, duration: 0.4, ease: 'none' }, holdEnd);
+      if (capTitle) tl.to(capTitle, { opacity: 0, duration: 0.4, ease: 'none' }, holdEnd);
+      if (capSub) tl.to(capSub, { opacity: 0, duration: 0.4, ease: 'none' }, holdEnd);
+      if (frags.length) tl.to(frags, { opacity: 0, duration: 0.5, stagger: 0.03, ease: 'none' }, holdEnd);
+      if (extra) tl.to(extra, { opacity: 0, duration: 0.4, ease: 'none' }, holdEnd);
+
+      tl.to(deviceWrap, {
+        opacity: 0, scale: 0.05, z: -1500, rotationY: exitRotY, rotationX: opts.exitRotX || 0,
+        duration: 1.1, ease: 'none'
+      }, holdEnd + 0.15);
+
+      if (typeof opts.extend === 'function') opts.extend(tl, panel, holdEnd);
+
+    } else {
+      // Mobile / reduced-motion: simple reveal, no pin, no scrub
+      gsap.set(deviceWrap, { opacity: 0, scale: 1, z: 0, rotationY: 0 });
+      var stl = gsap.timeline({
+        scrollTrigger: { trigger: panel, start: 'top 75%', toggleActions: 'play none none reverse' },
+        defaults: { ease: 'power2.out' }
+      });
+      stl.to(deviceWrap, { opacity: 1, duration: 0.8 }, 0);
+      if (capIndex) stl.to(capIndex, { opacity: 1, y: 0, duration: 0.6 }, 0.15);
+      if (capTitle) stl.to(capTitle, { opacity: 1, y: 0, duration: 0.6 }, 0.25);
+      if (capSub) stl.to(capSub, { opacity: 1, y: 0, duration: 0.6 }, 0.35);
+      if (extra) stl.to(extra, { opacity: 0.9, duration: 0.6 }, 0.3);
+    }
+  }
+
+  /* Project 01 — Milimeter: browser rises from distance */
+  buildScene('#p-milimeter', { enterRotY: -26, exitRotY: 20, scrollLength: 170 });
+
+  /* Project 02 — Amritanshu: rotates in from the side */
+  buildScene('#p-amritanshu', { enterRotY: 46, exitRotY: -30, scrollLength: 170 });
+
+  /* Project 03 — MMS: dissolves into connected nodes at the end */
+  buildScene('#p-mms', {
+    enterRotY: -18, exitRotY: 0, scrollLength: 180, extraNodes: '.node-dot',
+    extend: function (tl, panel, holdEnd) {
+      var dots = panel.querySelectorAll('.node-dot');
+      if (!dots.length) return;
+      tl.to(dots, { opacity: 1, scale: 1.4, stagger: 0.06, duration: 0.5, ease: 'none' }, holdEnd - 0.2);
+    }
+  });
+
+  /* Project 04 — HRMS: dashboard expands, camera flies through (frags fly past) */
+  buildScene('#p-hrms', {
+    enterRotY: 0, enterRotX: 14, exitRotY: 0, exitRotX: -10, scrollLength: 190,
+    extend: function (tl, panel) {
+      var flyFrags = panel.querySelectorAll('.fly-frag');
+      if (!flyFrags.length) return;
+      tl.fromTo(flyFrags, { z: -260, opacity: 0 }, { z: 520, opacity: 1, stagger: 0.12, duration: 1.4, ease: 'none' }, 1.6);
+      tl.to(flyFrags, { z: 900, opacity: 0, stagger: 0.12, duration: 0.9, ease: 'none' }, 2.6);
+    }
+  });
+
+  /* Project 05 — PMS: cards move forward/back in depth */
+  buildScene('#p-pms', {
+    enterRotY: -14, exitRotY: 18, scrollLength: 170,
+    extend: function (tl, panel) {
+      var depthFrags = panel.querySelectorAll('.depth-frag');
+      depthFrags.forEach(function (f, i) {
+        tl.fromTo(f, { z: -200 + i * 60, opacity: 0 }, { z: 60 - i * 40, opacity: 1, duration: 0.8, ease: 'none' }, 1.3 + i * 0.1);
+      });
+    }
+  });
+
+  /* ---------------------------------------------------------
+     MAIN EVENT — OFFERX (signature sequence)
+  --------------------------------------------------------- */
+  (function offerx() {
+    var panel = document.querySelector('#p-offerx');
+    if (!panel || !gsapReady) return;
+    var deviceWrap = panel.querySelector('.device-wrap');
+    var capIndex = panel.querySelector('.cap-index');
+    var capTitle = panel.querySelector('.cap-title');
+    var capSub = panel.querySelector('.cap-sub-big');
+    var sideLeft = panel.querySelector('.side-left');
+    var sideRight = panel.querySelector('.side-right');
+    var cards = panel.querySelectorAll('.card-1, .card-2, .card-3');
+
+    if (isDesktop) {
+      var tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: panel, start: 'top top', end: '+=260%', scrub: 1, pin: true, anticipatePin: 1
+        }
+      });
+
+      // Phone rapidly approaches, rotating in from the dark distance
+      tl.fromTo(deviceWrap,
+        { opacity: 0, scale: 0.03, z: -2200, rotationY: -70, rotationX: 10 },
+        { opacity: 1, scale: 1, z: 0, rotationY: 0, rotationX: 0, duration: 1.4, ease: 'none' }, 0);
+
+      tl.fromTo(capIndex, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'none' }, 0.3);
+      tl.fromTo(capTitle, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: 'none' }, 0.4);
+
+      // Headline "A MARKETPLACE BUILT FOR MOBILE" appears, then clears
+      tl.fromTo(capSub, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'none' }, 1.0);
+      tl.to([capIndex, capTitle, capSub], { opacity: 0, duration: 0.4, ease: 'none' }, 1.7);
+
+      // Screen "expands beyond the device" — the whole device scales up to fill the frame
+      tl.to(deviceWrap, { scale: 1.55, duration: 1.2, ease: 'none' }, 1.8);
+
+      // BUY moves left, SELL moves right — the marketplace opens up around the viewer
+      tl.fromTo(sideLeft, { opacity: 0, x: 0, z: -100 }, { opacity: 1, x: -60, z: 80, duration: 1.1, ease: 'none' }, 2.1);
+      tl.fromTo(sideRight, { opacity: 0, x: 0, z: -100 }, { opacity: 1, x: 60, z: 80, duration: 1.1, ease: 'none' }, 2.1);
+
+      // Product cards travel toward the camera, as if passing the viewer
+      cards.forEach(function (c, i) {
+        tl.fromTo(c, { opacity: 0, z: -300, scale: 0.7 },
+          { opacity: 1, z: 420, scale: 1.15, duration: 1.3, ease: 'none' }, 2.4 + i * 0.15);
+        tl.to(c, { opacity: 0, z: 760, duration: 0.7, ease: 'none' }, 3.5 + i * 0.15);
+      });
+
+      // Everything collapses back into the phone
+      tl.to([sideLeft, sideRight], { opacity: 0, x: 0, z: -100, duration: 0.7, ease: 'none' }, 3.9);
+      tl.to(deviceWrap, { scale: 1, duration: 0.8, ease: 'none' }, 3.9);
+
+      // Phone rotates sideways in preparation for becoming the admin monitor
+      tl.to(deviceWrap, { opacity: 0, rotationY: 95, scale: 0.4, z: -300, duration: 1, ease: 'none' }, 4.6);
+
+    } else {
+      gsap.set(deviceWrap, { opacity: 0 });
+      var stl = gsap.timeline({
+        scrollTrigger: { trigger: panel, start: 'top 75%', toggleActions: 'play none none reverse' },
+        defaults: { ease: 'power2.out' }
+      });
+      stl.to(deviceWrap, { opacity: 1, duration: 0.8 }, 0);
+      stl.to(capIndex, { opacity: 1, duration: 0.5 }, 0.1);
+      stl.to(capTitle, { opacity: 1, duration: 0.5 }, 0.2);
+      stl.to(capSub, { opacity: 1, duration: 0.5 }, 0.3);
+    }
+  })();
+
+  /* Project 07 — OfferX Admin: rotates in from sideways, unfolds like a machine */
+  buildScene('#p-admin', {
+    enterRotY: -90, exitRotY: 0, scrollLength: 190,
+    extend: function (tl, panel, holdEnd) {
+      var unfoldFrags = panel.querySelectorAll('.unfold-frag');
+      if (!unfoldFrags.length) return;
+      tl.fromTo(unfoldFrags, { y: 50, opacity: 0, rotationX: -20 },
+        { y: 0, opacity: 1, rotationX: 0, stagger: 0.1, duration: 0.8, ease: 'none' }, 1.5);
+    }
+  });
+
+  /* ---------------------------------------------------------
+     ARCHITECTURE / STACK
+  --------------------------------------------------------- */
+  (function architecture() {
+    var panel = document.querySelector('#architecture');
+    if (!panel || !gsapReady) return;
+
+    var chipsData = ['Java', 'Spring Boot', 'React', 'React Native', 'Node.js', 'PostgreSQL', 'MySQL', 'MongoDB', 'Docker', 'Kubernetes', 'Google Cloud'];
+    var cloud = document.getElementById('techCloud');
+    chipsData.forEach(function (c) {
+      var span = document.createElement('span');
+      span.className = 'tech-chip';
+      span.textContent = c;
+      cloud.appendChild(span);
+    });
+
+    var nodes = panel.querySelectorAll('.arch-node');
+    var lines = panel.querySelectorAll('.arch-line');
+    var flowSpans = panel.querySelectorAll('.arch-flow span');
+    var flow = panel.querySelector('.arch-flow');
+    var chips = panel.querySelectorAll('.tech-chip');
+
+    if (isDesktop) {
+      var tl = gsap.timeline({
+        scrollTrigger: { trigger: panel, start: 'top top', end: '+=220%', scrub: 1, pin: true, anticipatePin: 1 }
+      });
+
+      tl.fromTo(nodes, { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, stagger: 0.08, duration: 1, ease: 'none' }, 0);
+      tl.fromTo(lines, { opacity: 0 }, { opacity: 1, duration: 0.8, ease: 'none' }, 0.5);
+
+      tl.to([nodes, lines], { opacity: 0, duration: 0.6, ease: 'none' }, 1.6);
+
+      tl.fromTo(flow, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'none' }, 1.8);
+      tl.fromTo(flowSpans, { opacity: 0, y: 14 }, { opacity: 1, y: 0, stagger: 0.18, duration: 0.5, ease: 'none' }, 1.9);
+      tl.to(flow, { opacity: 0, duration: 0.5, ease: 'none' }, 3.1);
+
+      tl.fromTo(cloud, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'none' }, 3.3);
+      tl.fromTo(chips, { opacity: 0, y: 20, scale: 0.8 }, { opacity: 1, y: 0, scale: 1, stagger: 0.03, duration: 0.6, ease: 'none' }, 3.4);
+    } else {
+      gsap.set([nodes, lines, flow], { opacity: 0 });
+      var stl = gsap.timeline({ scrollTrigger: { trigger: panel, start: 'top 70%', toggleActions: 'play none none reverse' } });
+      stl.to(cloud, { opacity: 1, duration: 0.8 }, 0);
+      stl.to(chips, { opacity: 1, y: 0, stagger: 0.03, duration: 0.5 }, 0.1);
+    }
   })();
 
   /* ---------------------------------------------------------
-     Tech chips
+     ABOUT — independent line reveals
   --------------------------------------------------------- */
-  (function techChips() {
-    var cloud = document.getElementById('techCloud');
-    if (!cloud) return;
-    var chips = [
-      'Java', 'Spring Boot', 'React', 'React Native', 'JavaScript', 'Python',
-      'Node.js', 'PostgreSQL', 'MySQL', 'MongoDB', 'Docker', 'Kubernetes', 'Google Cloud'
-    ];
-    chips.forEach(function (c, i) {
-      var el = document.createElement('span');
-      el.className = 'tech-chip';
-      el.textContent = c;
-      el.style.animationDelay = (-(i % 6) * 0.9) + 's';
-      cloud.appendChild(el);
+  (function about() {
+    if (!gsapReady) return;
+    var lines = document.querySelectorAll('.about-line');
+    lines.forEach(function (line, i) {
+      gsap.fromTo(line, { opacity: 0, y: 40, rotationX: -30 }, {
+        opacity: 1, y: 0, rotationX: 0, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: line, start: 'top 80%', toggleActions: 'play none none reverse' }
+      });
     });
   })();
 
   /* ---------------------------------------------------------
-     Mobile nav toggle (simple in-place, no menu markup needed
-     beyond existing links; toggles a class for small screens)
+     CONTACT — point expands into headline
   --------------------------------------------------------- */
-  (function mobileNav() {
-    var toggle = document.getElementById('navToggle');
-    var links = document.querySelector('.nav-links');
-    if (!toggle || !links) return;
-    toggle.style.display = 'none'; // links collapse via CSS media query already hides them on small screens;
-    // toggle kept minimal/hidden to avoid adding unused UI per spec's minimalism.
+  (function contact() {
+    var panel = document.querySelector('#contact');
+    if (!panel || !gsapReady) return;
+    var point = panel.querySelector('.contact-point');
+    var headline = panel.querySelector('.contact-headline');
+    var sub = panel.querySelector('.contact-sub');
+    var links = panel.querySelector('.contact-links');
+    var footer = panel.querySelector('.footer');
+
+    if (isDesktop) {
+      var tl = gsap.timeline({
+        scrollTrigger: { trigger: panel, start: 'top top', end: '+=120%', scrub: 1, pin: true, anticipatePin: 1 }
+      });
+      tl.fromTo(point, { scale: 0.4, opacity: 0.4 }, { scale: 14, opacity: 1, duration: 1, ease: 'none' }, 0)
+        .to(point, { opacity: 0, duration: 0.3, ease: 'none' }, 1.0)
+        .fromTo(headline, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: 'none' }, 1.1)
+        .fromTo(sub, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6, ease: 'none' }, 1.5)
+        .fromTo(links, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6, ease: 'none' }, 1.8)
+        .fromTo(footer, { opacity: 0 }, { opacity: 1, duration: 0.6, ease: 'none' }, 2.1);
+    } else {
+      gsap.set(point, { scale: 1, opacity: 1 });
+      var stl = gsap.timeline({ scrollTrigger: { trigger: panel, start: 'top 70%', toggleActions: 'play none none reverse' } });
+      stl.to(headline, { opacity: 1, y: 0, duration: 0.6 }, 0)
+        .to(sub, { opacity: 1, y: 0, duration: 0.6 }, 0.15)
+        .to(links, { opacity: 1, y: 0, duration: 0.6 }, 0.3)
+        .to(footer, { opacity: 1, duration: 0.6 }, 0.45);
+    }
   })();
+
+  /* ---------------------------------------------------------
+     Resize handling
+  --------------------------------------------------------- */
+  window.addEventListener('resize', function () {
+    if (gsapReady) ScrollTrigger.refresh();
+  });
 
 })();
